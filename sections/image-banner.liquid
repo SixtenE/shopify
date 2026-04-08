@@ -128,57 +128,88 @@
     </div>
   {%- endif -%}
   {%- assign current_exhibition = blogs['current-exhibition'].articles.first -%}
-  <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'heading' -%}
-            <h2
-              class="banner__heading inline-richtext {{ block.settings.heading_size }}"
-              {{ block.shopify_attributes }}
+  {%- liquid
+    assign heading_block = nil
+    assign text_block = nil
+    assign buttons_block = nil
+    for block in section.blocks
+      case block.type
+        when 'heading'
+          assign heading_block = block
+        when 'text'
+          assign text_block = block
+        when 'buttons'
+          assign buttons_block = block
+      endcase
+    endfor
+  -%}
+  <div class="banner__content banner__content--split page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="banner__col banner__col--left">
+      {%- if heading_block != blank -%}
+        <h2
+          class="banner__heading inline-richtext {{ heading_block.settings.heading_size }}"
+          {{ heading_block.shopify_attributes }}
+        >
+          {%- if current_exhibition != blank -%}
+            {{ current_exhibition.title }}
+          {%- else -%}
+            {{ heading_block.settings.heading }}
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+    </div>
+    <div class="banner__col banner__col--right">
+      {%- if text_block != blank -%}
+        <div class="banner__text rte {{ text_block.settings.text_style }}" {{ text_block.shopify_attributes }}>
+          <p>{{ text_block.settings.text }}</p>
+        </div>
+      {%- endif -%}
+      {%- if buttons_block != blank -%}
+        {%- liquid
+          if current_exhibition != blank
+            assign button_label_1 = 'Shop the exhibition'
+            assign button_link_1 = routes.collections_url | append: '/' | append: current_exhibition.handle
+            assign button_label_2 = 'Read more'
+            assign button_link_2 = current_exhibition.url
+            assign button_style_secondary_2 = true
+          else
+            assign button_label_1 = buttons_block.settings.button_label_1
+            assign button_link_1 = buttons_block.settings.button_link_1
+            assign button_label_2 = buttons_block.settings.button_label_2
+            assign button_link_2 = buttons_block.settings.button_link_2
+            assign button_style_secondary_2 = buttons_block.settings.button_style_secondary_2
+          endif
+        -%}
+        <div
+          class="banner__buttons{% if button_label_1 != blank and button_label_2 != blank %} banner__buttons--multiple{% endif %}"
+          {{ buttons_block.shopify_attributes }}
+        >
+          {%- if button_label_1 != blank -%}
+            <a
+              {% if button_link_1 == blank %}
+                role="link" aria-disabled="true"
+              {% else %}
+                href="{{ button_link_1 }}"
+              {% endif %}
+              class="button{% if buttons_block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
             >
-              {%- if current_exhibition != blank -%}
-                {{ current_exhibition.title }}
-              {%- else -%}
-                {{ block.settings.heading }}
-              {%- endif -%}
-            </h2>
-          {%- when 'text' -%}
-            <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
-              <p>{{ block.settings.text }}</p>
-            </div>
-          {%- when 'buttons' -%}
-            <div
-              class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}"
-              {{ block.shopify_attributes }}
+              {{- button_label_1 | escape -}}
+            </a>
+          {%- endif -%}
+          {%- if button_label_2 != blank -%}
+            <a
+              {% if button_link_2 == blank %}
+                role="link" aria-disabled="true"
+              {% else %}
+                href="{{ button_link_2 }}"
+              {% endif %}
+              class="button{% if button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
             >
-              {%- if block.settings.button_label_1 != blank -%}
-                <a
-                  {% if block.settings.button_link_1 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_1 }}"
-                  {% endif %}
-                  class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label_1 | escape -}}
-                </a>
-              {%- endif -%}
-              {%- if block.settings.button_label_2 != blank -%}
-                <a
-                  {% if block.settings.button_link_2 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_2 }}"
-                  {% endif %}
-                  class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label_2 | escape -}}
-                </a>
-              {%- endif -%}
-            </div>
-        {%- endcase -%}
-      {%- endfor -%}
+              {{- button_label_2 | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </div>

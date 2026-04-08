@@ -1,0 +1,287 @@
+{% stylesheet %}
+  .dual-content {
+    padding-top: var(--dual-content-padding-top, 60px);
+    padding-bottom: var(--dual-content-padding-bottom, 60px);
+  }
+
+  .dual-content__inner {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .dual-content__column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dual-content__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.4rem;
+  }
+
+  .dual-content__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dual-content__image-placeholder {
+    background: #f0f0f0;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    border-radius: 0.4rem;
+  }
+
+  .dual-content__text {
+    padding: 2rem 0 1.5rem;
+    flex: 1;
+  }
+
+  .dual-content__heading {
+    margin: 0 0 1rem;
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .dual-content__body {
+    margin: 0;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.75);
+  }
+
+  .dual-content__button-wrapper {
+    margin-top: 1.5rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .dual-content__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+<div
+  class="dual-content color-{{ section.settings.color_scheme }} gradient"
+  style="
+    --dual-content-padding-top: {{ section.settings.padding_top }}px;
+    --dual-content-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="dual-content__inner">
+    {%- for i in (1..2) -%}
+      {%- liquid
+        if i == 1
+          assign col_image = section.settings.column_1_image
+          assign col_heading = section.settings.column_1_heading
+          assign col_text = section.settings.column_1_text
+          assign col_button_label = section.settings.column_1_button_label
+          assign col_button_link = section.settings.column_1_button_link
+          assign col_button_secondary = section.settings.column_1_button_secondary
+          assign col_image_ratio = section.settings.column_1_image_ratio
+        else
+          assign col_image = section.settings.column_2_image
+          assign col_heading = section.settings.column_2_heading
+          assign col_text = section.settings.column_2_text
+          assign col_button_label = section.settings.column_2_button_label
+          assign col_button_link = section.settings.column_2_button_link
+          assign col_button_secondary = section.settings.column_2_button_secondary
+          assign col_image_ratio = section.settings.column_2_image_ratio
+        endif
+      -%}
+
+      <div class="dual-content__column">
+        <div class="dual-content__image-wrapper" style="aspect-ratio: {{ col_image_ratio }}">
+          {%- if col_image != blank -%}
+            {{
+              col_image
+              | image_url: width: 900
+              | image_tag:
+                widths: '450, 600, 750, 900',
+                sizes: '(max-width: 749px) calc(100vw - 3rem), calc(50vw - 2.5rem)',
+                loading: 'lazy'
+            }}
+          {%- else -%}
+            <div class="dual-content__image-placeholder">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="dual-content__text">
+          {%- if col_heading != blank -%}
+            <h2 class="dual-content__heading">{{ col_heading | escape }}</h2>
+          {%- endif -%}
+          {%- if col_text != blank -%}
+            <p class="dual-content__body">{{ col_text }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if col_button_label != blank -%}
+          <div class="dual-content__button-wrapper">
+            <a
+              href="{{ col_button_link | default: '#' }}"
+              class="button{% if col_button_secondary %} button--secondary{% else %} button--primary{% endif %}"
+              {%- if col_button_link contains 'http' %} target="_blank" rel="noopener noreferrer"{% endif -%}
+            >
+              {{ col_button_label | escape }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Dual content columns",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Column 1 — Gallery"
+    },
+    {
+      "type": "image_picker",
+      "id": "column_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "column_1_image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "4 / 3", "label": "Landscape (4:3)" },
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "3 / 4", "label": "Portrait (3:4)" },
+        { "value": "16 / 9", "label": "Widescreen (16:9)" }
+      ],
+      "default": "4 / 3"
+    },
+    {
+      "type": "text",
+      "id": "column_1_heading",
+      "label": "Heading",
+      "default": "Visit the Gallery"
+    },
+    {
+      "type": "textarea",
+      "id": "column_1_text",
+      "label": "Text",
+      "default": "Explore our gallery space featuring rotating exhibitions from leading contemporary artists."
+    },
+    {
+      "type": "text",
+      "id": "column_1_button_label",
+      "label": "Button label",
+      "default": "Explore the gallery"
+    },
+    {
+      "type": "url",
+      "id": "column_1_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "column_1_button_secondary",
+      "label": "Use secondary button style",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Column 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "column_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "column_2_image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "4 / 3", "label": "Landscape (4:3)" },
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "3 / 4", "label": "Portrait (3:4)" },
+        { "value": "16 / 9", "label": "Widescreen (16:9)" }
+      ],
+      "default": "4 / 3"
+    },
+    {
+      "type": "text",
+      "id": "column_2_heading",
+      "label": "Heading",
+      "default": "Our other work"
+    },
+    {
+      "type": "textarea",
+      "id": "column_2_text",
+      "label": "Text",
+      "default": "Discover more about what we do beyond the gallery."
+    },
+    {
+      "type": "text",
+      "id": "column_2_button_label",
+      "label": "Button label",
+      "default": "Learn more"
+    },
+    {
+      "type": "url",
+      "id": "column_2_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "column_2_button_secondary",
+      "label": "Use secondary button style",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dual content columns"
+    }
+  ]
+}
+{% endschema %}
