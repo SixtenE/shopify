@@ -2,6 +2,18 @@
   position: initial;
 }
 
+.header__icon--summary .lucide-x {
+  display: none;
+}
+
+details[open] .header__icon--summary .lucide-menu {
+  display: none;
+}
+
+details[open] .header__icon--summary .lucide-x {
+  display: block;
+}
+
 .js menu-drawer > details > summary::before,
 .js menu-drawer > details[open]:not(.menu-opening) > summary::before {
   content: '';

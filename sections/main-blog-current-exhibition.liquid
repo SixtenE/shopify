@@ -1,0 +1,99 @@
+{{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+
+{%- assign article = blog.articles.first -%}
+
+{%- if article -%}
+  <article class="current-exhibition-article">
+    {%- if article.image -%}
+      <div class="current-exhibition-article__hero">
+        <img
+          srcset="
+            {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+            {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+            {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+            {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
+            {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
+            {{ article.image | image_url }} {{ article.image.width }}w
+          "
+          sizes="100vw"
+          src="{{ article.image | image_url: width: 1500 }}"
+          loading="eager"
+          fetchpriority="high"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+          alt="{{ article.image.alt | escape }}"
+          class="current-exhibition-article__hero-img"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="current-exhibition-article__body page-width page-width--narrow">
+      <h1 class="current-exhibition-article__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ article.title | escape }}
+      </h1>
+
+      {%- if section.settings.show_date -%}
+        <p class="current-exhibition-article__date caption-with-letter-spacing{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{- article.published_at | time_tag: format: 'date' -}}
+        </p>
+      {%- endif -%}
+
+      <div class="current-exhibition-article__content rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ article.content }}
+      </div>
+    </div>
+  </article>
+{%- else -%}
+  <div class="page-width">
+    <p>{{ 'blogs.article.no_matches' | t }}</p>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .current-exhibition-article__hero {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .current-exhibition-article__hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .current-exhibition-article__body {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .current-exhibition-article__title {
+    margin-bottom: 1.5rem;
+  }
+
+  .current-exhibition-article__date {
+    margin-bottom: 3rem;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .current-exhibition-article__content {
+    margin-top: 3rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Current exhibition",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": false,
+      "label": "Show date"
+    }
+  ]
+}
+{% endschema %}
