@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "liquid-theme-a11y": {
+      "source": "benjaminsehl/liquid-skills",
+      "sourceType": "github",
+      "computedHash": "2b8575d6baa6c6dcd18b24607ffa7b423a107d9561a369cd3e7cee291d28e249"
+    },
+    "liquid-theme-standards": {
+      "source": "benjaminsehl/liquid-skills",
+      "sourceType": "github",
+      "computedHash": "bd00f2a2455861201c66d6b84d6153135e8f62e27326f7563e7a656ba53dada1"
+    },
+    "shopify-liquid-themes": {
+      "source": "benjaminsehl/liquid-skills",
+      "sourceType": "github",
+      "computedHash": "ffbd442951b3c06c451d4fa39a7b7cc0dea3618976bdb87508621e7c561eabe7"
+    }
+  }
+}
