@@ -102,7 +102,7 @@
         "column_2_heading": "Our other work",
         "column_2_text": "Discover more about what we do beyond the gallery.",
         "column_2_button_label": "Visit Mural",
-        "column_2_button_link": "",
+        "column_2_button_link": "https://wildstylemural.se/",
         "column_2_button_secondary": true,
         "padding_top": 60,
         "padding_bottom": 60
