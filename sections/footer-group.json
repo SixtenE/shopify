@@ -11,52 +11,18 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "newsletter_nBkCwH": {
-      "type": "newsletter",
-      "blocks": {
-        "heading_6dVJKV": {
-          "type": "heading",
-          "settings": {
-            "heading": "WILDSTYLE NEWSLETTER",
-            "heading_size": "h2"
-          }
-        },
-        "paragraph_YnDxkA": {
-          "type": "paragraph",
-          "settings": {
-            "text": "<p>Don’t miss out on upcoming exhibitions and special offers</p>"
-          }
-        },
-        "email_form_9JABYj": {
-          "type": "email_form",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "heading_6dVJKV",
-        "paragraph_YnDxkA",
-        "email_form_9JABYj"
-      ],
-      "name": "t:sections.newsletter.presets.name",
-      "settings": {
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
     "footer": {
       "type": "footer",
       "settings": {
         "color_scheme": "scheme-1",
         "col1_heading": "GALLERI WILDSTYLE",
-        "col1_content": "<p>Kyrkogårdsgatan 23<br/>Uppsala, Sweden</p><p><br/>FRIDAY 16.00-19.00</p><p>SATURDAY 12.00-15.00</p><p>SUNDAY 12.00-15.00</p>",
+        "col1_content": "<p><a href=\"https://www.google.com/maps/search/?api=1&query=Kyrkogårdsgatan+23,+Uppsala,+Sweden\" target=\"_blank\">Kyrkogårdsgatan 23<br/>Uppsala, Sweden</a></p><p><br/>FRIDAY 16.00-19.00</p><p>SATURDAY 12.00-15.00</p><p>SUNDAY 12.00-15.00</p>",
         "col2_heading": "Contact",
         "col2_content": "<p>INFO@WILDSTYLE.SE</p>",
         "col2_link_label": "Fler kontaktuppgifter",
         "col2_link_url": "",
-        "col3_heading": "Info",
-        "col3_menu": "footer",
+"newsletter_heading": "WILDSTYLE NEWSLETTER",
+        "newsletter_text": "<p>Don’t miss out on upcoming exhibitions and special offers</p>",
         "bottom_link_label": "Om galleriet",
         "bottom_link_url": "",
         "show_policy": true,
@@ -66,7 +32,6 @@
     }
   },
   "order": [
-    "newsletter_nBkCwH",
     "footer"
   ]
 }
