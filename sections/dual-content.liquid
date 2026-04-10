@@ -21,7 +21,7 @@
   .dual-content__image-wrapper {
     position: relative;
     overflow: hidden;
-    border-radius: 0.4rem;
+    border-radius: 4px;
   }
 
   .dual-content__image-wrapper img {
@@ -32,13 +32,13 @@
   }
 
   .dual-content__image-placeholder {
-    background: #f0f0f0;
+    background: rgba(var(--color-foreground), 0.04);
     aspect-ratio: 4 / 3;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #999;
-    border-radius: 0.4rem;
+    color: rgba(var(--color-foreground), 0.3);
+    border-radius: 4px;
   }
 
   .dual-content__text {
@@ -48,15 +48,17 @@
 
   .dual-content__heading {
     margin: 0 0 1rem;
-    font-size: 2rem;
-    line-height: 1.2;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
   }
 
   .dual-content__body {
     margin: 0;
-    font-size: 1.3rem;
-    line-height: 1.9;
-    color: rgba(var(--color-foreground), 0.75);
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: rgba(var(--color-foreground), 0.7);
   }
 
   .dual-content__button-wrapper {

@@ -17,7 +17,8 @@
 
 {% stylesheet %}
   .footer-custom {
-    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+    border-top: none;
+    margin-top: 12rem;
   }
 
   .footer-custom__outer-grid {
@@ -48,14 +49,14 @@
 
   .footer-custom__heading {
     font-size: 1.6rem;
-    font-weight: 400;
+    font-weight: 700;
     margin: 0 0 2rem;
     letter-spacing: 0.01em;
   }
 
   .footer-custom__content {
-    font-size: 1.3rem;
-    line-height: 1.9;
+    font-size: 1.4rem;
+    line-height: 1.5;
   }
 
   .footer-custom__content p {
@@ -93,10 +94,12 @@
   .footer-custom__menu-link {
     text-decoration: none;
     font-size: 1.4rem;
-    color: inherit;
+    font-weight: 400;
+    color: rgba(var(--color-foreground), 0.7);
   }
 
   .footer-custom__menu-link:hover {
+    color: rgb(var(--color-foreground));
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -132,15 +135,43 @@
 
   .footer-custom__newsletter h2 {
     font-size: 1.6rem;
-    font-weight: 400;
+    font-weight: 700;
     margin: 0 0 2rem;
     letter-spacing: 0.01em;
   }
 
   .footer-custom__newsletter .newsletter__subheading {
-    font-size: 1.3rem;
-    line-height: 1.9;
+    font-size: 1.4rem;
+    line-height: 1.5;
     margin-bottom: 2rem;
+  }
+
+  .footer-custom__hours {
+    margin-top: 1.6rem;
+  }
+
+  .footer-custom__hours-heading {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 0.8rem;
+  }
+
+  .footer-custom__hours-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.6rem;
+    font-size: 1.4rem;
+    line-height: 1.5;
+  }
+
+  .footer-custom__hours-day {
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .footer-custom__hours-time {
+    color: rgba(var(--color-foreground), 0.7);
+    text-align: right;
+    white-space: nowrap;
   }
 
   .footer-custom__bottom {
@@ -151,7 +182,7 @@
   .footer-custom__copyright {
     padding-top: 2.4rem;
     font-size: 1.2rem;
-    color: rgba(var(--color-foreground), 0.6);
+    color: rgba(var(--color-foreground), 0.5);
     display: flex;
     flex-wrap: wrap;
     gap: 1.6rem;
@@ -185,6 +216,31 @@
               <div class="footer-custom__address-wrapper">
                 <div class="footer-custom__content rte">{{ section.settings.col1_content }}</div>
                 <svg class="footer-custom__address-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+              </div>
+            {%- endif -%}
+            {%- assign has_hours = false -%}
+            {%- for i in (1..5) -%}
+              {%- assign day_key = 'hours_day_' | append: i -%}
+              {%- assign time_key = 'hours_time_' | append: i -%}
+              {%- if section.settings[day_key] != blank or section.settings[time_key] != blank -%}
+                {%- assign has_hours = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_hours -%}
+              <div class="footer-custom__hours">
+                {%- if section.settings.hours_heading != blank -%}
+                  <p class="footer-custom__hours-heading">{{ section.settings.hours_heading | escape }}</p>
+                {%- endif -%}
+                {%- for i in (1..5) -%}
+                  {%- assign day_key = 'hours_day_' | append: i -%}
+                  {%- assign time_key = 'hours_time_' | append: i -%}
+                  {%- if section.settings[day_key] != blank or section.settings[time_key] != blank -%}
+                    <div class="footer-custom__hours-row">
+                      <span class="footer-custom__hours-day">{{ section.settings[day_key] | escape }}</span>
+                      <span class="footer-custom__hours-time">{{ section.settings[time_key] | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
               </div>
             {%- endif -%}
           </div>
@@ -333,6 +389,66 @@
     },
     {
       "type": "header",
+      "content": "Column 1 — Opening hours"
+    },
+    {
+      "type": "text",
+      "id": "hours_heading",
+      "label": "Hours heading",
+      "default": "Öppettider"
+    },
+    {
+      "type": "text",
+      "id": "hours_day_1",
+      "label": "Row 1 — Day"
+    },
+    {
+      "type": "text",
+      "id": "hours_time_1",
+      "label": "Row 1 — Time"
+    },
+    {
+      "type": "text",
+      "id": "hours_day_2",
+      "label": "Row 2 — Day"
+    },
+    {
+      "type": "text",
+      "id": "hours_time_2",
+      "label": "Row 2 — Time"
+    },
+    {
+      "type": "text",
+      "id": "hours_day_3",
+      "label": "Row 3 — Day"
+    },
+    {
+      "type": "text",
+      "id": "hours_time_3",
+      "label": "Row 3 — Time"
+    },
+    {
+      "type": "text",
+      "id": "hours_day_4",
+      "label": "Row 4 — Day"
+    },
+    {
+      "type": "text",
+      "id": "hours_time_4",
+      "label": "Row 4 — Time"
+    },
+    {
+      "type": "text",
+      "id": "hours_day_5",
+      "label": "Row 5 — Day"
+    },
+    {
+      "type": "text",
+      "id": "hours_time_5",
+      "label": "Row 5 — Time"
+    },
+    {
+      "type": "header",
       "content": "Column 2 — Contact"
     },
     {
@@ -408,11 +524,11 @@
       "type": "range",
       "id": "padding_top",
       "min": 0,
-      "max": 100,
+      "max": 200,
       "step": 4,
       "unit": "px",
       "label": "Top padding",
-      "default": 60
+      "default": 160
     },
     {
       "type": "range",
