@@ -95,7 +95,7 @@
         "column_1_heading": "Visit the Gallery",
         "column_1_text": "Explore our gallery space featuring rotating exhibitions from leading contemporary artists.",
         "column_1_button_label": "Explore the gallery",
-        "column_1_button_link": "/pages/about",
+        "column_1_button_link": "shopify://pages/om-galleriet",
         "column_1_button_secondary": false,
         "column_2_image": "shopify://shop_images/mural.jpg",
         "column_2_image_ratio": "4 / 3",
