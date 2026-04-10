@@ -133,6 +133,7 @@
             <a
               href="{{ col_button_link | default: '#' }}"
               class="button{% if col_button_secondary %} button--secondary{% else %} button--primary{% endif %}"
+              style="display: inline-flex; align-items: center;"
               {%- if col_button_link contains 'http' %} target="_blank" rel="noopener noreferrer"{% endif -%}
             >
               {{ col_button_label | escape }}

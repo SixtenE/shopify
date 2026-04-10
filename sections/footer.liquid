@@ -1,5 +1,6 @@
 {{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
 {{ 'newsletter-section.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .footer-custom {
@@ -25,6 +26,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 4rem;
+    align-items: start;
   }
 
   @media screen and (min-width: 750px) {
@@ -37,7 +39,9 @@
   .footer-custom__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    column-gap: 4rem;
+    row-gap: 3.2rem;
+    align-items: start;
   }
 
   @media screen and (max-width: 749px) {
@@ -48,9 +52,9 @@
   }
 
   .footer-custom__heading {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    margin: 0 0 2rem;
+    margin: 0 0 0.8rem;
     letter-spacing: 0.01em;
   }
 
@@ -65,16 +69,6 @@
 
   .footer-custom__content p + p {
     margin-top: 0.8rem;
-  }
-
-  .footer-custom__address-wrapper {
-    display: flex;
-    gap: 0.8rem;
-  }
-
-  .footer-custom__address-icon {
-    flex-shrink: 0;
-    margin-top: 0.2rem;
   }
 
   .footer-custom__menu {
@@ -134,7 +128,7 @@
   }
 
   .footer-custom__newsletter h2 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
     margin: 0 0 2rem;
     letter-spacing: 0.01em;
@@ -144,10 +138,6 @@
     font-size: 1.4rem;
     line-height: 1.5;
     margin-bottom: 2rem;
-  }
-
-  .footer-custom__hours {
-    margin-top: 1.6rem;
   }
 
   .footer-custom__hours-heading {
@@ -197,6 +187,35 @@
   .footer-custom__copyright a:hover {
     text-decoration: underline;
   }
+
+  .footer-custom__social-list {
+    display: flex;
+    justify-content: flex-start !important;
+    gap: 1.6rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-custom__social-list .list-social__item {
+    list-style: none;
+  }
+
+  .footer-custom__social-list .list-social__link {
+    display: flex;
+    align-items: flex-start;
+    padding: 0 1.1rem 1.1rem 0;
+    opacity: 0.7;
+    transition: opacity 150ms ease;
+  }
+
+  .footer-custom__social-list .list-social__link:hover {
+    opacity: 1;
+  }
+
+  .footer-custom__social-list .list-social__link .svg-wrapper svg {
+    width: 28px;
+    height: 28px;
+  }
 {% endstylesheet %}
 
 <footer class="footer-custom color-{{ section.settings.color_scheme }} gradient">
@@ -207,45 +226,17 @@
       <div class="footer-custom__main">
         <div class="footer-custom__grid">
 
-          {%- comment -%} Sub-column 1: Store info {%- endcomment -%}
+          {%- comment -%} Row 1, Col 1: Store info {%- endcomment -%}
           <div class="footer-custom__col">
             {%- if section.settings.col1_heading != blank -%}
               <h2 class="footer-custom__heading">{{ section.settings.col1_heading | escape }}</h2>
             {%- endif -%}
             {%- if section.settings.col1_content != blank -%}
-              <div class="footer-custom__address-wrapper">
-                <div class="footer-custom__content rte">{{ section.settings.col1_content }}</div>
-                <svg class="footer-custom__address-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
-              </div>
-            {%- endif -%}
-            {%- assign has_hours = false -%}
-            {%- for i in (1..5) -%}
-              {%- assign day_key = 'hours_day_' | append: i -%}
-              {%- assign time_key = 'hours_time_' | append: i -%}
-              {%- if section.settings[day_key] != blank or section.settings[time_key] != blank -%}
-                {%- assign has_hours = true -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if has_hours -%}
-              <div class="footer-custom__hours">
-                {%- if section.settings.hours_heading != blank -%}
-                  <p class="footer-custom__hours-heading">{{ section.settings.hours_heading | escape }}</p>
-                {%- endif -%}
-                {%- for i in (1..5) -%}
-                  {%- assign day_key = 'hours_day_' | append: i -%}
-                  {%- assign time_key = 'hours_time_' | append: i -%}
-                  {%- if section.settings[day_key] != blank or section.settings[time_key] != blank -%}
-                    <div class="footer-custom__hours-row">
-                      <span class="footer-custom__hours-day">{{ section.settings[day_key] | escape }}</span>
-                      <span class="footer-custom__hours-time">{{ section.settings[time_key] | escape }}</span>
-                    </div>
-                  {%- endif -%}
-                {%- endfor -%}
-              </div>
+              <div class="footer-custom__content rte">{{ section.settings.col1_content }}</div>
             {%- endif -%}
           </div>
 
-          {%- comment -%} Sub-column 2: Contact {%- endcomment -%}
+          {%- comment -%} Row 1, Col 2: Contact {%- endcomment -%}
           <div class="footer-custom__col">
             {%- if section.settings.col2_heading != blank -%}
               <h2 class="footer-custom__heading">{{ section.settings.col2_heading | escape }}</h2>
@@ -257,6 +248,41 @@
               <a href="{{ section.settings.col2_link_url }}" class="footer-custom__link">
                 {{- section.settings.col2_link_label | escape -}}
               </a>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Row 2, Col 1: Hours {%- endcomment -%}
+          <div class="footer-custom__col">
+            {%- assign has_hours = false -%}
+            {%- for i in (1..5) -%}
+              {%- assign day_key = 'hours_day_' | append: i -%}
+              {%- assign time_key = 'hours_time_' | append: i -%}
+              {%- if section.settings[day_key] != blank or section.settings[time_key] != blank -%}
+                {%- assign has_hours = true -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_hours -%}
+              {%- if section.settings.hours_heading != blank -%}
+                <p class="footer-custom__hours-heading">{{ section.settings.hours_heading | escape }}</p>
+              {%- endif -%}
+              {%- for i in (1..5) -%}
+                {%- assign day_key = 'hours_day_' | append: i -%}
+                {%- assign time_key = 'hours_time_' | append: i -%}
+                {%- if section.settings[day_key] != blank or section.settings[time_key] != blank -%}
+                  <div class="footer-custom__hours-row">
+                    <span class="footer-custom__hours-day">{{ section.settings[day_key] | escape }}</span>
+                    <span class="footer-custom__hours-time">{{ section.settings[time_key] | escape }}</span>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Row 2, Col 2: Socials {%- endcomment -%}
+          <div class="footer-custom__col">
+            {%- if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_tiktok_link != blank or settings.social_twitter_link != blank or settings.social_pinterest_link != blank -%}
+              <h2 class="footer-custom__heading">Socials</h2>
+              {% render 'social-icons', class: 'footer-custom__social-list' %}
             {%- endif -%}
           </div>
 

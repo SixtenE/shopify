@@ -53,16 +53,10 @@
           </div>
 
           <div class="artist-card__body">
-            <h2 class="artist-card__name">{{ article.title | escape }}</h2>
-            {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
-              <p class="artist-card__bio">
-                {%- if article.excerpt.size > 0 -%}
-                  {{ article.excerpt | strip_html | truncatewords: 25 }}
-                {%- else -%}
-                  {{ article.content | strip_html | truncatewords: 25 }}
-                {%- endif -%}
-              </p>
-            {%- endif -%}
+            <h2 class="artist-card__name">
+              {{ article.title | escape }}
+              <svg class="artist-card__arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </h2>
           </div>
         </a>
       {%- endfor -%}
@@ -104,30 +98,18 @@
   .artist-card {
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(15, 0, 0, 0.12);
-    border-radius: 4px;
-    overflow: hidden;
     text-decoration: none;
     color: inherit;
-    transition: border-color 150ms ease;
     background: rgb(var(--color-background));
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .artist-card:hover {
-      border-color: #646262;
-    }
-
-    .artist-card:hover .artist-card__image {
-      transform: scale(1.03);
-    }
-  }
 
   .artist-card__image-wrap {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 3;
     background: rgba(var(--color-foreground), 0.05);
+    border-radius: 4px;
   }
 
   .artist-card__image {
@@ -135,7 +117,6 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .artist-card__image-placeholder {
@@ -153,10 +134,9 @@
   }
 
   .artist-card__body {
-    padding: 2rem 2rem 2.4rem;
+    padding: 1.2rem 0 1.6rem;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
     flex: 1;
   }
 
@@ -165,15 +145,16 @@
     font-weight: 700;
     line-height: 1.4;
     margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
   }
 
-  .artist-card__bio {
-    font-size: 1.3rem;
-    font-weight: 400;
-    line-height: 1.6;
-    margin: 0;
-    color: #9a9898;
+  .artist-card__arrow {
+    flex-shrink: 0;
   }
+
 {% endstylesheet %}
 
 {% schema %}

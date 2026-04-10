@@ -30,9 +30,9 @@
   --alpha-button-background: 1;
   --alpha-button-border: 1;
   --alpha-link: 1;
-  --focused-base-outline: 0.2rem solid var(--ds-accent);
-  --focused-base-outline-offset: 0.3rem;
-  --focused-base-box-shadow: 0 0 0 0.3rem var(--ds-dark), 0 0 0.5rem 0.4rem rgba(253, 252, 252, 0.15);
+  --focused-base-outline: none;
+  --focused-base-outline-offset: 0;
+  --focused-base-box-shadow: none;
 }
 
 /* Body text — full opacity, not the Dawn default 0.75 */
@@ -66,6 +66,11 @@ h1, .h1 {
 h2, .h2 {
   font-size: 1.6rem !important;
   font-weight: 700;
+}
+
+h2.footer-custom__heading,
+.footer-custom__newsletter h2 {
+  font-size: 1.4rem !important;
 }
 
 /* H3 */
@@ -148,7 +153,7 @@ button.shopify-payment-button__button--unbranded {
   letter-spacing: 0.01em;
   min-height: 4rem;
   padding: 0.4rem 2rem;
-  transition: opacity 150ms ease, transform 160ms var(--ease-out);
+  transition: transform 160ms var(--ease-out);
 }
 
 /* Remove Dawn's pseudo-element shadow/border system */
@@ -168,15 +173,11 @@ button.shopify-payment-button__button--unbranded {
   border-radius: 4px !important;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .button:not([disabled]):hover {
-    opacity: 0.85;
-  }
-}
 
 .button:not([disabled]):active,
 .shopify-challenge__button:not([disabled]):active,
-.customer button:not([disabled]):active {
+.customer button:not([disabled]):active,
+.newsletter-form__button:active {
   transform: scale(0.97);
 }
 
@@ -196,7 +197,7 @@ button.shopify-payment-button__button--unbranded {
 .select__select,
 .customer .field input,
 .customer select {
-  border-radius: 0;
+  border-radius: 4px;
   font-size: 1.3rem;
   padding: 1.2rem 2rem;
   height: auto;
@@ -222,9 +223,24 @@ button.shopify-payment-button__button--unbranded {
 }
 
 .field__input:focus-visible,
+.field__input:focus,
 .select__select:focus-visible,
-.customer .field input:focus-visible {
+.select__select:focus,
+.customer .field input:focus-visible,
+.customer .field input:focus,
+.customer select:focus-visible,
+.customer select:focus {
   outline: none;
+  box-shadow: none;
+}
+
+.button:focus-visible,
+.button:focus,
+.button.focused,
+.shopify-payment-button__button--unbranded:focus-visible,
+.shopify-payment-button__button--unbranded:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 /* ---------- Cards — flat, no shadow ---------- */
@@ -258,6 +274,108 @@ hr {
 /* ---------- Section Spacing ---------- */
 .section-template--* + .section-template--* {
   margin-top: 0;
+}
+
+/* Normalize section padding across all sections — overrides per-section inline styles */
+[class*="section-"][class*="-padding"] {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+
+/* Extra breathing room between hero video and featured products */
+#shopify-section-featured_collection {
+  margin-top: 48px;
+}
+
+/* dual-content: uses CSS custom properties set as inline vars */
+.dual-content {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+
+/* artists-blog: inline <style> tag, needs !important to win cascade */
+.artists-blog {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+
+/* current-exhibition: hardcoded 6rem in stylesheet block */
+.current-exhibition-article__body {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+
+@media screen and (min-width: 750px) {
+  [class*="section-"][class*="-padding"],
+  .dual-content,
+  .artists-blog,
+  .current-exhibition-article__body {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  #shopify-section-featured_collection {
+    margin-top: 64px;
+  }
+}
+
+/* ---------- Collection Facets ---------- */
+.facets__form {
+  align-items: flex-start;
+}
+
+.facets__wrapper {
+  align-self: flex-start;
+}
+
+.facets__heading {
+  margin-top: 0;
+}
+
+.facet-filters {
+  align-items: flex-start;
+}
+
+.facets__form .product-count {
+  align-self: flex-start;
+}
+
+.facets__heading,
+.facets__disclosure,
+.facet-filters__label,
+.facet-filters__sort,
+.product-count__text {
+  font-size: 1.4rem !important;
+}
+
+.facet-filters__label {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.facet-filters__field .select {
+  align-items: center;
+}
+
+.facet-filters__field .select__select {
+  height: auto;
+  min-height: unset;
+  padding: 0 0.5rem 0 0;
+}
+
+.facet-filters__field .select .svg-wrapper {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  height: auto;
+  width: auto;
 }
 
 /* ---------- Product Cards ---------- */
@@ -324,7 +442,7 @@ hr {
   background-color: rgba(var(--color-foreground), 0.08);
   color: rgb(var(--color-foreground));
   border: none;
-  border-radius: 0;
+  border-radius: 4px;
   height: 4.5rem;
   padding: 1.5rem 5rem 1.5rem 2rem;
 }
@@ -520,27 +638,9 @@ body {
   }
 }
 
-/* Footer address arrow — nudge toward destination on hover */
-.footer-custom__address-icon {
-  transition: transform 250ms var(--ease-out);
-}
 
-@media (hover: hover) and (pointer: fine) {
-  .footer-custom__address-wrapper:hover .footer-custom__address-icon {
-    transform: translate(3px, -3px);
-  }
-}
-
-
-/* Newsletter submit arrow — nudge right on hover */
 .newsletter-form__button {
-  transition: transform 150ms var(--ease-out), opacity 150ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .newsletter-form__button:hover {
-    transform: translateX(3px);
-  }
+  transition: transform 160ms var(--ease-out);
 }
 
 /* Scroll triggers — stronger ease-out curve */
@@ -556,8 +656,6 @@ body {
 /* Reduced motion — keep only opacity/color, remove movement */
 @media (prefers-reduced-motion: reduce) {
   .dual-content__image-wrapper img,
-  .footer-custom__address-icon,
-  .newsletter-form__button,
   .header__icon {
     transition: opacity 150ms ease !important;
   }
@@ -566,12 +664,13 @@ body {
   .shopify-challenge__button,
   .customer button,
   button.shopify-payment-button__button--unbranded {
-    transition: opacity 150ms ease !important;
+    transition: none !important;
   }
 
   .button:not([disabled]):active,
   .shopify-challenge__button:not([disabled]):active,
-  .customer button:not([disabled]):active {
+  .customer button:not([disabled]):active,
+  .newsletter-form__button:active {
     transform: none !important;
   }
 
@@ -579,7 +678,4 @@ body {
     transform: none !important;
   }
 
-  .footer-custom__address-wrapper:hover .footer-custom__address-icon {
-    transform: none !important;
-  }
 }
