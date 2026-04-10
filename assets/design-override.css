@@ -295,22 +295,39 @@ hr {
 
 /* artists-blog: inline <style> tag, needs !important to win cascade */
 .artists-blog {
-  padding-top: 40px !important;
+  padding-top: 36px !important;
   padding-bottom: 40px !important;
+}
+
+/* main-blog (exhibitions): match artists-blog padding-top */
+.main-blog[class] {
+  padding-top: 36px !important;
 }
 
 /* current-exhibition: hardcoded 6rem in stylesheet block */
 .current-exhibition-article__body {
-  padding-top: 40px !important;
+  padding-top: 36px !important;
   padding-bottom: 40px !important;
 }
 
 @media screen and (min-width: 750px) {
   [class*="section-"][class*="-padding"],
-  .dual-content,
-  .artists-blog,
-  .current-exhibition-article__body {
+  .dual-content {
     padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .artists-blog {
+    padding-top: 36px !important;
+    padding-bottom: 64px !important;
+  }
+
+  .main-blog[class] {
+    padding-top: 36px !important;
+  }
+
+  .current-exhibition-article__body {
+    padding-top: 36px !important;
     padding-bottom: 64px !important;
   }
 
@@ -552,6 +569,11 @@ hr {
 }
 
 /* ---------- Blog / Article ---------- */
+
+/* Match blog page title position to artists page (no top margin — section padding handles it) */
+.title--primary {
+  margin-top: 0 !important;
+}
 .article-card__title {
   font-weight: 700;
 }
