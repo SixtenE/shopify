@@ -21,59 +21,20 @@
         "padding_bottom": 36
       }
     },
-    "multicolumn_QPiQtU": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_XyJUxW": {
-          "type": "column",
-          "source": "{{ blog.metafields.custom.artists.value }}",
-          "settings": {
-            "image": "{{ blog.metafields.custom.artists.value.portrattbild.value }}",
-            "title": "{{ blog.metafields.custom.artists.value.nationalitet.value }}",
-            "text": "<p>{{ blog.metafields.custom.artists.value.fodelsear.value }}</p>",
-            "link_label": "{{ blog.metafields.custom.artists.value.namn.value }}",
-            "link": "{{ blog.metafields.custom.artists.value.instagram.value }}"
-          }
-        },
-        "column_6qnqEk": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_gdwcLn": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_XyJUxW",
-        "column_6qnqEk",
-        "column_gdwcLn"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
+    "featured_blog_bpH3qP": {
+      "type": "featured-blog",
+      "name": "t:sections.featured-blog.presets.name",
       "settings": {
-        "title": "Multicolumn",
+        "blog": "artists",
+        "post_limit": 3,
+        "heading": "Blog posts",
         "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "Button label",
-        "button_link": "",
-        "card_layout": "vertical",
         "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
+        "show_view_all": true,
+        "show_image": true,
+        "show_date": true,
+        "show_author": false,
         "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -81,6 +42,6 @@
   },
   "order": [
     "main",
-    "multicolumn_QPiQtU"
+    "featured_blog_bpH3qP"
   ]
 }
