@@ -1,0 +1,585 @@
+/* ==========================================================================
+   Design System Override — Terminal-Inspired Dark Aesthetic
+   Based on DESIGN.md — warm near-black, monospace-first, flat & borderless
+   ========================================================================== */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --ds-dark: #201d1d;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ds-dark-surface: #302c2c;
+  --ds-light: #fdfcfc;
+  --ds-mid-gray: #9a9898;
+  --ds-muted: #6e6e73;
+  --ds-border: rgba(15, 0, 0, 0.12);
+  --ds-border-strong: #646262;
+  --ds-accent: #007aff;
+  --ds-accent-hover: #0056b3;
+  --ds-accent-active: #004085;
+  --ds-danger: #ff3b30;
+  --ds-success: #30d158;
+  --ds-warning: #ff9f0a;
+  --ds-input-bg: #f8f7f7;
+}
+
+/* ---------- Global Overrides ---------- */
+
+/* Remove all shadows globally */
+:root {
+  --alpha-button-background: 1;
+  --alpha-button-border: 1;
+  --alpha-link: 1;
+  --focused-base-outline: 0.2rem solid var(--ds-accent);
+  --focused-base-outline-offset: 0.3rem;
+  --focused-base-box-shadow: 0 0 0 0.3rem var(--ds-dark), 0 0 0.5rem 0.4rem rgba(253, 252, 252, 0.15);
+}
+
+/* Body text — full opacity, not the Dawn default 0.75 */
+body {
+  color: rgb(var(--color-foreground)) !important;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+/* Override Dawn's 0.75 opacity on body text */
+body.gradient {
+  color: rgb(var(--color-foreground)) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5,
+.h0, .h1, .h2, .h3, .h4, .h5 {
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+/* ---------- Typography Scale (per DESIGN.md) ---------- */
+
+/* H1 — 38px / 2.38rem */
+h1, .h1 {
+  font-size: 2.38rem !important;
+  font-weight: 700;
+}
+
+/* H2 — 16px / 1rem, bold */
+h2, .h2 {
+  font-size: 1.6rem !important;
+  font-weight: 700;
+}
+
+/* H3 */
+h3, .h3 {
+  font-size: 1.6rem !important;
+  font-weight: 700;
+}
+
+/* Remove Dawn's huge heading sizes */
+.hxxl {
+  font-size: clamp(2.38rem, 6vw, 3.8rem) !important;
+  line-height: 1.3;
+}
+
+.hxl {
+  font-size: 2.38rem !important;
+}
+
+.h0 {
+  font-size: 2.38rem !important;
+}
+
+/* Hero / image-banner heading — boldly big */
+.banner__heading {
+  font-size: clamp(4rem, 10vw, 9rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Body text */
+.caption,
+.caption-large {
+  font-size: 1.4rem;
+  line-height: 2;
+}
+
+.caption-with-letter-spacing,
+.caption-with-letter-spacing--medium,
+.caption-with-letter-spacing--large {
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+/* ---------- Links ---------- */
+.link,
+.customer a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+  text-decoration-thickness: 0.1rem;
+  font-weight: 500;
+}
+
+.underlined-link,
+.customer a {
+  color: inherit;
+}
+
+.underlined-link:hover,
+.customer a:hover,
+.inline-richtext a:hover {
+  color: var(--ds-accent);
+}
+
+a:not([class]) {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+/* ---------- Buttons ---------- */
+.button,
+.shopify-challenge__button,
+.customer button,
+button.shopify-payment-button__button--unbranded {
+  border-radius: 4px !important;
+  font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: 0.01em;
+  min-height: 4rem;
+  padding: 0.4rem 2rem;
+  transition: opacity 150ms ease, transform 160ms var(--ease-out);
+}
+
+/* Remove Dawn's pseudo-element shadow/border system */
+.button:before,
+.shopify-challenge__button:before,
+.customer button:before,
+.shopify-payment-button__button--unbranded:before {
+  box-shadow: none !important;
+}
+
+.button:after,
+.shopify-challenge__button:after,
+.customer button:after,
+.shopify-payment-button__button--unbranded:after {
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:not([disabled]):hover {
+    opacity: 0.85;
+  }
+}
+
+.button:not([disabled]):active,
+.shopify-challenge__button:not([disabled]):active,
+.customer button:not([disabled]):active {
+  transform: scale(0.97);
+}
+
+/* Secondary/tertiary buttons */
+.button--secondary,
+.button--tertiary {
+  background-color: rgb(var(--color-foreground)) !important;
+  color: rgb(var(--color-background)) !important;
+}
+
+.button--tertiary:after {
+  border: none !important;
+}
+
+/* ---------- Forms / Inputs ---------- */
+.field__input,
+.select__select,
+.customer .field input,
+.customer select {
+  border-radius: 0;
+  font-size: 1.3rem;
+  padding: 1.2rem 2rem;
+  height: auto;
+  min-height: 4.5rem;
+  border: none;
+}
+
+/* Remove Dawn's pseudo-element border system on fields */
+.field:after,
+.select:after,
+.customer .field:after,
+.customer select:after,
+.localization-form__select:after {
+  display: none;
+}
+
+.field:before,
+.select:before,
+.customer .field:before,
+.customer select:before,
+.localization-form__select:before {
+  display: none;
+}
+
+.field__input:focus-visible,
+.select__select:focus-visible,
+.customer .field input:focus-visible {
+  outline: none;
+}
+
+/* ---------- Cards — flat, no shadow ---------- */
+.card {
+  border-radius: 4px;
+}
+
+.card--card {
+  border: none;
+}
+
+.card--card:hover {
+  border: none;
+}
+
+/* Remove all card shadows */
+.card__inner {
+  box-shadow: none !important;
+}
+
+/* ---------- Borders & Dividers ---------- */
+hr {
+  background-color: transparent;
+  height: 0;
+}
+
+.border-top {
+  border-top: none;
+}
+
+/* ---------- Section Spacing ---------- */
+.section-template--* + .section-template--* {
+  margin-top: 0;
+}
+
+/* ---------- Product Cards ---------- */
+.card-wrapper {
+  border-radius: 4px;
+}
+
+.card-wrapper:hover .card {
+  border-color: var(--ds-border-strong);
+}
+
+/* Product card text */
+.card-information__text {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+/* Price */
+.price-item {
+  font-weight: 500;
+}
+
+/* ---------- Header Overrides ---------- */
+.section-header {
+  border-bottom: none;
+}
+
+.header__heading-link {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* Icon size — smaller than Dawn's 20px default */
+.header__icon .svg-wrapper {
+  width: 16px;
+  height: 16px;
+}
+
+.header__icon .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Nav links */
+.header__menu-item,
+.list-menu__item--link {
+  font-weight: 500;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.header__menu-item:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+/* ---------- Footer Overrides ---------- */
+.footer-custom {
+  border-top: none;
+}
+
+/* ---------- Newsletter / Email Capture ---------- */
+.newsletter-form__field-wrapper .field__input {
+  background-color: rgba(var(--color-foreground), 0.08);
+  color: rgb(var(--color-foreground));
+  border: none;
+  border-radius: 0;
+  height: 4.5rem;
+  padding: 1.5rem 5rem 1.5rem 2rem;
+}
+
+.newsletter-form__field-wrapper .field__input:focus,
+.newsletter-form__field-wrapper .field__input:not(:placeholder-shown),
+.newsletter-form__field-wrapper .field__input:-webkit-autofill {
+  padding: 2.2rem 5rem 0.8rem 2rem;
+  height: 4.5rem;
+}
+
+.newsletter-form__field-wrapper .field__label {
+  top: 50%;
+  transform: translateY(-50%);
+  transition: top var(--duration-short) ease, font-size var(--duration-short) ease, transform var(--duration-short) ease;
+}
+
+.newsletter-form__field-wrapper .field__input:focus ~ .field__label,
+.newsletter-form__field-wrapper .field__input:not(:placeholder-shown) ~ .field__label {
+  top: calc(var(--inputs-border-width) + 0.5rem);
+  transform: translateY(0);
+}
+
+.newsletter-form__field-wrapper .field__input::placeholder {
+  color: rgba(var(--color-foreground), 0.4);
+}
+
+/* ---------- Announcement Bar ---------- */
+.announcement-bar {
+  border-bottom: none;
+}
+
+/* ---------- Cart Drawer ---------- */
+.cart-drawer {
+  border-left: none;
+}
+
+/* ---------- Badges ---------- */
+.badge {
+  border-radius: 4px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Popups / Modals ---------- */
+.popup-modal__content,
+.menu-drawer {
+  border-radius: 4px;
+}
+
+/* ---------- Scroll animations — keep but make snappy ---------- */
+.scroll-trigger.scroll-trigger--design-1 {
+  transition-duration: 300ms;
+}
+
+/* ---------- Image treatment — minimal borders ---------- */
+.global-media-settings {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* ---------- Pagination ---------- */
+.pagination__item {
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+/* ---------- Breadcrumbs ---------- */
+.breadcrumbs__link {
+  font-weight: 500;
+  color: var(--ds-mid-gray);
+  text-decoration: none;
+}
+
+.breadcrumbs__link:hover {
+  color: rgb(var(--color-foreground));
+}
+
+/* ---------- Selection / Highlights ---------- */
+::selection {
+  background-color: rgba(0, 122, 255, 0.3);
+}
+
+/* ---------- Quantity Input ---------- */
+.quantity__input {
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+/* ---------- Tabs ---------- */
+.product__info-container .accordion__title {
+  font-weight: 500;
+}
+
+/* ---------- Rich Text Section ---------- */
+.rich-text__text.rte {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ---------- Collection Grid ---------- */
+.collection-hero__title {
+  font-size: 2.38rem;
+  font-weight: 700;
+}
+
+/* ---------- Blog / Article ---------- */
+.article-card__title {
+  font-weight: 700;
+}
+
+.article-card__info {
+  font-size: 1.4rem;
+  color: var(--ds-mid-gray);
+}
+
+/* ---------- Predictive Search ---------- */
+.predictive-search {
+  border-radius: 4px;
+  border: none !important;
+}
+
+.predictive-search__results-groups-wrapper {
+  border: none;
+}
+
+/* ---------- Cart Notification ---------- */
+.cart-notification {
+  border-radius: 4px;
+  border: none;
+}
+
+/* ---------- Misc Cleanup ---------- */
+
+/* Remove letter-spacing that Dawn adds everywhere */
+.button,
+.button-label,
+.shopify-challenge__button,
+.customer button {
+  letter-spacing: 0.01em;
+}
+
+/* Ensure smooth font rendering for dark backgrounds */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove the light opacity Dawn applies */
+.light {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Micro-interactions & Animations
+   ========================================================================== */
+
+/* Header icons — subtle opacity on hover */
+@media (hover: hover) and (pointer: fine) {
+  .header__icon {
+    transition: opacity 150ms ease;
+  }
+
+  .header__icon:hover {
+    opacity: 0.55;
+  }
+}
+
+/* Footer links — smooth color transition */
+.footer-custom__menu-link {
+  transition: color 150ms ease;
+}
+
+.footer-custom__link {
+  transition: opacity 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-custom__link:hover {
+    opacity: 0.65;
+  }
+}
+
+.footer-custom__copyright a {
+  transition: opacity 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-custom__copyright a:hover {
+    opacity: 0.65;
+  }
+}
+
+/* Footer address arrow — nudge toward destination on hover */
+.footer-custom__address-icon {
+  transition: transform 250ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-custom__address-wrapper:hover .footer-custom__address-icon {
+    transform: translate(3px, -3px);
+  }
+}
+
+
+/* Newsletter submit arrow — nudge right on hover */
+.newsletter-form__button {
+  transition: transform 150ms var(--ease-out), opacity 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .newsletter-form__button:hover {
+    transform: translateX(3px);
+  }
+}
+
+/* Scroll triggers — stronger ease-out curve */
+.scroll-trigger {
+  transition-timing-function: var(--ease-out) !important;
+}
+
+/* Breadcrumb links */
+.breadcrumbs__link {
+  transition: color 150ms ease;
+}
+
+/* Reduced motion — keep only opacity/color, remove movement */
+@media (prefers-reduced-motion: reduce) {
+  .dual-content__image-wrapper img,
+  .footer-custom__address-icon,
+  .newsletter-form__button,
+  .header__icon {
+    transition: opacity 150ms ease !important;
+  }
+
+  .button,
+  .shopify-challenge__button,
+  .customer button,
+  button.shopify-payment-button__button--unbranded {
+    transition: opacity 150ms ease !important;
+  }
+
+  .button:not([disabled]):active,
+  .shopify-challenge__button:not([disabled]):active,
+  .customer button:not([disabled]):active {
+    transform: none !important;
+  }
+
+  .dual-content__column:hover .dual-content__image-wrapper img {
+    transform: none !important;
+  }
+
+  .footer-custom__address-wrapper:hover .footer-custom__address-icon {
+    transform: none !important;
+  }
+}
