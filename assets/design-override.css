@@ -183,7 +183,8 @@ button.shopify-payment-button__button--unbranded {
 /* Secondary/tertiary buttons */
 .button--secondary,
 .button--tertiary {
-  background-color: rgba(var(--color-foreground), 0.08) !important;
+  background-color: rgb(var(--color-foreground)) !important;
+  color: rgb(var(--color-background)) !important;
 }
 
 .button--tertiary:after {
@@ -530,16 +531,6 @@ body {
   }
 }
 
-/* Dual content — gentle image zoom on hover */
-.dual-content__image-wrapper img {
-  transition: transform 600ms var(--ease-out);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .dual-content__column:hover .dual-content__image-wrapper img {
-    transform: scale(1.03);
-  }
-}
 
 /* Newsletter submit arrow — nudge right on hover */
 .newsletter-form__button {
