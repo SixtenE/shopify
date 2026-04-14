@@ -11,6 +11,8 @@
 .article-template__hero-container {
   max-width: 130rem;
   margin: 0 auto;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .article-template__hero-small {
@@ -172,4 +174,75 @@
 
 .article-template__back:last-child {
   margin-bottom: 3.2rem;
+}
+
+.article-template__artist-products {
+  margin-top: 5rem;
+  padding-top: 5rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+.article-template__artist-products-heading {
+  margin: 0 0 3rem;
+}
+
+.article-template__artist-products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media screen and (min-width: 750px) {
+  .article-template__artist-products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.article-template__artist-products-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.article-template__artist-social {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.article-template__artist-social-label {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(var(--color-foreground), 0.5);
+  margin: 0 0 1rem;
+}
+
+.article-template__artist-social-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article-template__artist-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+}
+
+.article-template__artist-social-link:hover {
+  text-decoration: underline;
+}
+
+.article-template__artist-social-link .svg-wrapper {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }

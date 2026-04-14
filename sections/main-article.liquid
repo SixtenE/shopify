@@ -79,19 +79,108 @@
           {% assign share_url = request.origin | append: article.url %}
           {% render 'share-button', block: block, share_link: share_url %}
         </div>
+
+      {%- when 'social_links' -%}
+        {%- liquid
+          assign has_social = false
+          if block.settings.instagram != blank or block.settings.facebook != blank or block.settings.tiktok != blank or block.settings.website != blank
+            assign has_social = true
+          endif
+        -%}
+        {%- if has_social -%}
+          <div
+            class="article-template__artist-social page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.label != blank -%}
+              <p class="article-template__artist-social-label">{{ block.settings.label | escape }}</p>
+            {%- endif -%}
+            <ul class="article-template__artist-social-list list-unstyled" role="list">
+              {%- if block.settings.instagram != blank -%}
+                <li>
+                  <a href="{{ block.settings.instagram }}" class="article-template__artist-social-link link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <span class="svg-wrapper">
+                      {{- 'icon-instagram.svg' | inline_asset_content -}}
+                    </span>
+                    Instagram
+                  </a>
+                </li>
+              {%- endif -%}
+              {%- if block.settings.facebook != blank -%}
+                <li>
+                  <a href="{{ block.settings.facebook }}" class="article-template__artist-social-link link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <span class="svg-wrapper">
+                      {{- 'icon-facebook.svg' | inline_asset_content -}}
+                    </span>
+                    Facebook
+                  </a>
+                </li>
+              {%- endif -%}
+              {%- if block.settings.tiktok != blank -%}
+                <li>
+                  <a href="{{ block.settings.tiktok }}" class="article-template__artist-social-link link" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                    <span class="svg-wrapper">
+                      {{- 'icon-tiktok.svg' | inline_asset_content -}}
+                    </span>
+                    TikTok
+                  </a>
+                </li>
+              {%- endif -%}
+              {%- if block.settings.website != blank -%}
+                <li>
+                  <a href="{{ block.settings.website }}" class="article-template__artist-social-link link" target="_blank" rel="noopener noreferrer" aria-label="Website">
+                    <span class="svg-wrapper">
+                      {{- 'icon-globe.svg' | inline_asset_content -}}
+                    </span>
+                    Website
+                  </a>
+                </li>
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+      {%- when 'artist_products' -%}
+        {%- if block.settings.collection != blank -%}
+          {%- assign artist_collection = collections[block.settings.collection] -%}
+          {%- if artist_collection != empty and artist_collection.products_count > 0 -%}
+            <div
+              class="article-template__artist-products page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <h2 class="article-template__artist-products-heading">
+                {{ block.settings.heading | default: 'Shop artwork' | escape }}
+              </h2>
+              <ul class="article-template__artist-products-grid list-unstyled" role="list">
+                {%- for product in artist_collection.products limit: block.settings.products_to_show -%}
+                  <li>
+                    {%- render 'card-product',
+                      card_product: product,
+                      media_aspect_ratio: 'square',
+                      show_secondary_image: true,
+                      show_vendor: false,
+                      show_rating: false,
+                      lazy_load: true,
+                      skip_styles: forloop.index > 1,
+                      quick_add: false,
+                      section_id: section.id
+                    -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+              {%- if block.settings.show_view_all and artist_collection.products_count > block.settings.products_to_show -%}
+                <div class="article-template__artist-products-footer">
+                  <a href="{{ artist_collection.url }}" class="button button--secondary">
+                    {{ block.settings.view_all_label | default: 'View all' | escape }}
+                  </a>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
     {%- endcase -%}
   {%- endfor -%}
 
-  <div class="article-template__back element-margin-top center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
-      <span class="icon-wrap">
-        <span class="svg-wrapper">
-          {{- 'icon-arrow.svg' | inline_asset_content -}}
-        </span>
-      </span>
-      {{ 'blogs.article.back_to_blog' | t: title: blog.title | escape }}
-    </a>
-  </div>
   {%- if blog.comments_enabled? -%}
     <div class="article-template__comment-wrapper background-secondary">
       <div
@@ -366,6 +455,78 @@
           "id": "share_label",
           "label": "t:sections.main-article.blocks.share.settings.text.label",
           "default": "t:sections.main-article.blocks.share.settings.text.default"
+        }
+      ]
+    },
+    {
+      "type": "artist_products",
+      "name": "Artist products",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shop artwork"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "range",
+          "id": "products_to_show",
+          "label": "Products to show",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "checkbox",
+          "id": "show_view_all",
+          "label": "Show \"View all\" button",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "view_all_label",
+          "label": "\"View all\" label",
+          "default": "View all"
+        }
+      ]
+    },
+    {
+      "type": "social_links",
+      "name": "Artist social links",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Follow the artist"
+        },
+        {
+          "type": "url",
+          "id": "instagram",
+          "label": "Instagram URL"
+        },
+        {
+          "type": "url",
+          "id": "facebook",
+          "label": "Facebook URL"
+        },
+        {
+          "type": "url",
+          "id": "tiktok",
+          "label": "TikTok URL"
+        },
+        {
+          "type": "url",
+          "id": "website",
+          "label": "Website URL"
         }
       ]
     }
