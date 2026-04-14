@@ -5,11 +5,32 @@
 {% endif %}
 
 <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-{%- if cart != empty -%}
+{%- if cart != empty and section.settings.show_item_count -%}
   <div class="cart-count-bubble">
-    {%- if cart.item_count < 100 -%}
+    {%- if section.settings.show_count_over_99 or cart.item_count < 100 -%}
       <span aria-hidden="true">{{ cart.item_count }}</span>
     {%- endif -%}
     <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
   </div>
 {%- endif -%}
+
+{% schema %}
+{
+  "name": "Cart icon bubble",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_item_count",
+      "label": "Show item count badge",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count_over_99",
+      "label": "Show exact count above 99",
+      "info": "By default counts above 99 are hidden to keep the badge tidy",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

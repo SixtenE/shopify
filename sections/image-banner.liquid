@@ -55,17 +55,17 @@
   id="Banner-{{ section.id }}"
   class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
-  {%- if section.settings.video_url != blank -%}
+  {%- if section.settings.video != blank -%}
     <div class="banner__media media{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      <video
-        autoplay
-        muted
-        loop
-        playsinline
-        style="width:100%;height:100%;object-fit:cover;display:block;"
-      >
-        <source src="{{ section.settings.video_url }}" type="video/mp4">
-      </video>
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          style: 'width:100%;height:100%;object-fit:cover;display:block;'
+      }}
     </div>
   {%- elsif section.settings.image != blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -224,11 +224,14 @@
   },
   "settings": [
     {
-      "type": "text",
-      "id": "video_url",
-      "label": "Video URL (MP4)",
-      "default": "https://cdn.shopify.com/videos/c/o/v/10508a2c1fb845299852a3d737168a8e.mp4",
-      "info": "Enter a direct URL to an MP4 video. If set, the video will replace the image and autoplay silently."
+      "type": "header",
+      "content": "Media background"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background video",
+      "info": "Upload a video to use as the background. When set, it takes priority over the image."
     },
     {
       "type": "image_picker",

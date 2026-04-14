@@ -17,7 +17,9 @@
             | t: location_name: closest_location.location.name
           }}
         </p>
-        <p class="caption">{{ closest_location.pick_up_time }}</p>
+        {%- if section.settings.show_pickup_time -%}
+          <p class="caption">{{ closest_location.pick_up_time }}</p>
+        {%- endif -%}
         <button
           id="ShowPickupAvailabilityDrawer"
           class="pickup-availability-button link link--text underlined-link"
@@ -88,8 +90,10 @@
               <span class="svg-wrapper">
                 {{- 'icon-tick.svg' | inline_asset_content -}}
               </span>
-              {{ 'products.product.pickup_availability.pick_up_available' | t }},
-              {{ availability.pick_up_time | downcase }}
+              {{ 'products.product.pickup_availability.pick_up_available' | t }}
+              {%- if section.settings.show_pickup_time -%}
+                , {{ availability.pick_up_time | downcase }}
+              {%- endif -%}
             {%- endif -%}
           </p>
 
@@ -97,7 +101,7 @@
           <address class="pickup-availability-address">
             {{ address | format_address }}
 
-            {%- if address.phone.size > 0 -%}
+            {%- if section.settings.show_phone and address.phone.size > 0 -%}
               <p>{{ address.phone }}</p>
             {%- endif -%}
           </address>
@@ -106,3 +110,23 @@
     </ul>
   </pickup-availability-drawer>
 {%- endif -%}
+
+{% schema %}
+{
+  "name": "Pickup availability",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_pickup_time",
+      "label": "Show pickup time estimate",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show store phone number",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

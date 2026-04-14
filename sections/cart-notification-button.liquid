@@ -1,1 +1,27 @@
-{{ 'general.cart.view' | t: count: cart.item_count }}
+{%- if section.settings.button_text != blank -%}
+  {{ section.settings.button_text }}
+{%- elsif section.settings.show_item_count -%}
+  {{ 'general.cart.view' | t: count: cart.item_count }}
+{%- else -%}
+  {{ 'general.cart.view' | t: count: 0 }}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cart notification button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "info": "Leave blank to use the default translated text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_item_count",
+      "label": "Show item count in button",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

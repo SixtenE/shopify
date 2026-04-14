@@ -1,1 +1,22 @@
-{%- render 'cart-drawer' -%}
+{%- render 'cart-drawer', color_scheme: section.settings.color_scheme, drawer_title: section.settings.drawer_title -%}
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "drawer_title",
+      "label": "Drawer title",
+      "info": "Leave blank to use the default translated title"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "info": "Overrides the global cart color scheme setting",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

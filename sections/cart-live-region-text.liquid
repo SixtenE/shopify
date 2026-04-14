@@ -1,1 +1,26 @@
-{{ 'sections.cart.new_estimated_total' | t }}: {{ cart.total_price | money_with_currency }}
+{%- if section.settings.label_text != blank -%}
+  {{ section.settings.label_text }}
+{%- else -%}
+  {{ 'sections.cart.new_estimated_total' | t }}
+{%- endif -%}: {% if section.settings.show_currency_code %}{{ cart.total_price | money_with_currency }}{% else %}{{ cart.total_price | money }}{% endif %}
+
+{% schema %}
+{
+  "name": "Cart total text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Label text",
+      "info": "Leave blank to use the default translated label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_code",
+      "label": "Show currency code",
+      "info": "e.g. display \"$10.00 USD\" instead of \"$10.00\"",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

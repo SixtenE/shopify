@@ -1,8 +1,13 @@
 {% comment %}
   Renders cart drawer
 
+  Accepts:
+  - color_scheme {String} - optional color scheme override (e.g. "scheme-2")
+  - drawer_title {String} - optional title override for the drawer heading
+
   Usage:
   {% render 'cart-drawer' %}
+  {% render 'cart-drawer', color_scheme: 'scheme-2', drawer_title: 'Your bag' %}
 {% endcomment %}
 
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
@@ -21,7 +26,7 @@
   <div id="CartDrawer" class="cart-drawer">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
     <div
-      class="drawer__inner gradient color-{{ settings.cart_color_scheme }}"
+      class="drawer__inner gradient color-{{ color_scheme | default: settings.cart_color_scheme }}"
       role="dialog"
       aria-modal="true"
       aria-label="{{ 'sections.cart.title' | t }}"
@@ -62,7 +67,13 @@
         </div>
       {%- endif -%}
       <div class="drawer__header">
-        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+        <h2 class="drawer__heading">
+          {%- if drawer_title != blank -%}
+            {{ drawer_title }}
+          {%- else -%}
+            {{ 'sections.cart.title' | t }}
+          {%- endif -%}
+        </h2>
         <button
           class="drawer__close"
           type="button"

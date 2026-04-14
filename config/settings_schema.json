@@ -143,6 +143,94 @@
         "unit": "%",
         "label": "t:settings_schema.typography.settings.body_scale.label",
         "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Font size overrides"
+      },
+      {
+        "type": "paragraph",
+        "content": "Scale individual text elements independently. 100% = default size."
+      },
+      {
+        "type": "range",
+        "id": "font_size_display",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Display / hero headings (hxxl, hxl)",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "font_size_h1",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading H1",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "font_size_h2",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading H2",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "font_size_h3",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading H3",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "font_size_h4",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading H4",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "font_size_h5",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading H5",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "font_size_body",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Body text",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "font_size_caption",
+        "min": 50,
+        "max": 200,
+        "step": 5,
+        "unit": "%",
+        "label": "Captions and labels",
+        "default": 100
       }
     ]
   },
