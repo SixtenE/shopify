@@ -30,7 +30,7 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "Learn more",
-            "button_link_1": "shopify://blogs/current-exhibition/henrik-stenberg-se",
+            "button_link_1": "shopify://blogs/current-exhibition",
             "button_style_secondary_1": false,
             "button_label_2": "",
             "button_link_2": "",
