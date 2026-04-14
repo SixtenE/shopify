@@ -1,5 +1,8 @@
 {
   "general": {
+    "breadcrumbs": {
+      "home": "Hem"
+    },
     "password_page": {
       "login_form_heading": "Ange lösenord för att komma i butiken:",
       "login_password_button": "Ange lösenord för att komma in",
@@ -59,8 +62,8 @@
   },
   "newsletter": {
     "label": "E-post",
-    "success": "Tack för att du prenumererar",
-    "button_label": "Prenumerera"
+    "success": "You're on the list — we'll be in touch before the next opening.",
+    "button_label": "Join the list"
   },
   "accessibility": {
     "skip_to_text": "Gå vidare till innehåll",
@@ -256,13 +259,13 @@
         "phone": "Telefonnummer",
         "comment": "Kommentar",
         "send": "Skicka",
-        "post_success": "Tack för att du kontaktar oss. Vi återkommer till dig så snart som möjligt.",
+        "post_success": "Thanks for your message — we'll reply within 1–2 business days.",
         "error_heading": "Justera följande:",
         "title": "Kontaktformulär"
       }
     },
     "404": {
-      "title": "Sidan hittades inte",
+      "title": "This page doesn't exist — but our collection does.",
       "subtext": "404"
     }
   },
@@ -308,7 +311,9 @@
       "taxes_at_checkout_shipping_at_checkout_without_policy": "Skatter, rabatter och fraktkostnad beräknas i kassan."
     },
     "footer": {
-      "payment": "Betalningsmetoder"
+      "payment": "Betalningsmetoder",
+      "hours_heading": "Öppettider",
+      "follow_us": "Följ oss"
     },
     "featured_blog": {
       "view_all": "Visa alla",

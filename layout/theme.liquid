@@ -7,6 +7,13 @@
     <meta name="theme-color" content="#fdfcfc">
     <link rel="canonical" href="{{ canonical_url }}">
 
+    {%- if localization.available_languages.size > 1 -%}
+      {%- for language in localization.available_languages -%}
+        <link rel="alternate" hreflang="{{ language.iso_code }}" href="{{ request.origin }}/{{ language.iso_code }}{{ canonical_url | remove: request.origin | remove_first: routes.root_url }}">
+      {%- endfor -%}
+      <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+    {%- endif -%}
+
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
@@ -305,6 +312,7 @@
     {% sections 'header-group' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {%- render 'breadcrumb' -%}
       {{ content_for_layout }}
     </main>
 

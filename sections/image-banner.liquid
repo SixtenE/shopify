@@ -167,11 +167,11 @@
       {%- if buttons_block != blank -%}
         {%- liquid
           if current_exhibition != blank
-            assign button_label_1 = 'Shop the exhibition'
-            assign button_link_1 = routes.collections_url | append: '/' | append: current_exhibition.handle
-            assign button_label_2 = 'Read more'
+            assign button_label_1 = blank
+            assign button_link_1 = blank
+            assign button_label_2 = 'Learn more'
             assign button_link_2 = current_exhibition.url
-            assign button_style_secondary_2 = true
+            assign button_style_secondary_2 = false
           else
             assign button_label_1 = buttons_block.settings.button_label_1
             assign button_link_1 = buttons_block.settings.button_link_1
