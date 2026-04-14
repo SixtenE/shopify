@@ -141,7 +141,7 @@
                     class="predictive-search__item predictive-search__item--link-with-thumbnail link link--text"
                     tabindex="-1"
                   >
-                    {%- if product.featured_media != blank -%}
+                    {%- if section.settings.show_product_images and product.featured_media != blank -%}
                       <img
                         class="predictive-search__image"
                         src="{{ product.featured_media | image_url: width: 150 }}"
@@ -150,15 +150,15 @@
                         height="{{ 50 | divided_by: product.featured_media.preview_image.aspect_ratio }}"
                       >
                     {%- endif -%}
-                    <div class="predictive-search__item-content{% unless settings.predictive_search_show_vendor or settings.predictive_search_show_price %} predictive-search__item-content--centered{% endunless %}">
-                      {%- if settings.predictive_search_show_vendor -%}
+                    <div class="predictive-search__item-content{% unless section.settings.show_vendor or section.settings.show_price %} predictive-search__item-content--centered{% endunless %}">
+                      {%- if section.settings.show_vendor -%}
                         <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
                         <div class="predictive-search__item-vendor caption-with-letter-spacing">
                           {{ product.vendor }}
                         </div>
                       {%- endif -%}
                       <p class="predictive-search__item-heading h5">{{ product.title | escape }}</p>
-                      {%- if settings.predictive_search_show_price -%}
+                      {%- if section.settings.show_price -%}
                         {% render 'price', product: product, use_variant: true, show_badges: false %}
                       {%- endif -%}
                     </div>
@@ -260,3 +260,29 @@
     %}
   </span>
 {%- endif -%}
+
+{% schema %}
+{
+  "name": "Predictive search",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_product_images",
+      "label": "Show product images",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

@@ -119,6 +119,15 @@
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
         --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
 
+        --font-size-scale-display: {{ settings.font_size_display | divided_by: 100.0 }};
+        --font-size-scale-h1: {{ settings.font_size_h1 | divided_by: 100.0 }};
+        --font-size-scale-h2: {{ settings.font_size_h2 | divided_by: 100.0 }};
+        --font-size-scale-h3: {{ settings.font_size_h3 | divided_by: 100.0 }};
+        --font-size-scale-h4: {{ settings.font_size_h4 | divided_by: 100.0 }};
+        --font-size-scale-h5: {{ settings.font_size_h5 | divided_by: 100.0 }};
+        --font-size-scale-body: {{ settings.font_size_body | divided_by: 100.0 }};
+        --font-size-scale-caption: {{ settings.font_size_caption | divided_by: 100.0 }};
+
         --media-padding: {{ settings.media_padding }}px;
         --media-border-opacity: {{ settings.media_border_opacity | divided_by: 100.0 }};
         --media-border-width: {{ settings.media_border_thickness }}px;
@@ -247,7 +256,7 @@
         grid-template-columns: 100%;
         min-height: 100%;
         margin: 0;
-        font-size: 1.6rem;
+        font-size: calc(var(--font-size-scale-body, 1) * 1.6rem);
         letter-spacing: 0.01em;
         line-height: 1.5;
         font-family: var(--font-body-family);

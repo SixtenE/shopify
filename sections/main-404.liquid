@@ -1,4 +1,4 @@
-<style type="text/css">
+<style>
   .template-404 .title + * {
     margin-top: 1rem;
   }
@@ -8,16 +8,100 @@
       margin-top: 2rem;
     }
   }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
 </style>
 
-<div class="template-404 page-width page-margin center">
+<div class="template-404 page-width page-margin center color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
   <p>
-    {{ 'templates.404.subtext' | t }}
+    {%- if section.settings.subtext != blank -%}
+      {{ section.settings.subtext }}
+    {%- else -%}
+      {{ 'templates.404.subtext' | t }}
+    {%- endif -%}
   </p>
   <h1 class="title">
-    {{ 'templates.404.title' | t }}
+    {%- if section.settings.heading != blank -%}
+      {{ section.settings.heading }}
+    {%- else -%}
+      {{ 'templates.404.title' | t }}
+    {%- endif -%}
   </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
+  <a
+    href="{{ section.settings.button_link | default: routes.all_products_collection_url }}"
+    class="button"
+  >
+    {%- if section.settings.button_label != blank -%}
+      {{ section.settings.button_label }}
+    {%- else -%}
+      {{ 'general.continue_shopping' | t }}
+    {%- endif -%}
   </a>
 </div>
+
+{% schema %}
+{
+  "name": "404 page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Leave blank to use the default translated text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "info": "Leave blank to use the default translated text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave blank to use the default translated text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Defaults to all products collection"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}
