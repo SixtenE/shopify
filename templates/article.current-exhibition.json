@@ -12,7 +12,7 @@
     "main": {
       "type": "main-article-current-exhibition",
       "settings": {
-        "show_date": true
+        "show_date": false
       }
     },
     "featured_collection_4xfQqf": {
