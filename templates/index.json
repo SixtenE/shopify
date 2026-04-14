@@ -44,8 +44,7 @@
         "button"
       ],
       "settings": {
-        "video_url": "https://cdn.shopify.com/videos/c/o/v/10508a2c1fb845299852a3d737168a8e.mp4",
-        "image": "shopify://shop_images/slideshow.gif",
+        "video": "shopify://files/videos/slideshow.mp4",
         "image_overlay_opacity": 60,
         "image_height": "large",
         "image_behavior": "ambient",
