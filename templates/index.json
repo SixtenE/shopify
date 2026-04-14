@@ -46,7 +46,7 @@
       "settings": {
         "image": "shopify://shop_images/HENRIKSTENBERG_35c02e13-75e8-46fc-bb24-68f2bcfc7c27.jpg",
         "image_overlay_opacity": 60,
-        "image_height": "large",
+        "image_height": "adapt",
         "image_behavior": "zoom-in",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
