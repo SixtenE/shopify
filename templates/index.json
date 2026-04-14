@@ -23,7 +23,7 @@
           "type": "text",
           "settings": {
             "text": "18.4.26 - 10.5.26",
-            "text_style": "body"
+            "text_style": "subtitle"
           }
         },
         "button": {
