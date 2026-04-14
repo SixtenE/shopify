@@ -1,70 +1,47 @@
-.article-template > *:first-child:not(.article-template__hero-container) {
-  margin-top: 5rem;
+.article-template__hero-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-top: 4rem;
+  margin-bottom: 3rem;
 }
 
 @media screen and (min-width: 750px) {
-  .article-template > *:first-child:not(.article-template__hero-container) {
+  .article-template__hero-layout {
+    flex-direction: row;
+    align-items: center;
+    gap: 5rem;
     margin-top: calc(5rem + var(--page-width-margin));
   }
 }
 
-.article-template__hero-container {
-  max-width: 130rem;
-  margin: 0 auto;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-}
-
-.article-template__hero-small {
-  height: 11rem;
-}
-
-.article-template__hero-medium {
-  height: 22rem;
-}
-
-.article-template__hero-large {
-  height: 33rem;
-}
-
-@media screen and (min-width: 750px) and (max-width: 989px) {
-  .article-template__hero-small {
-    height: 22rem;
-  }
-
-  .article-template__hero-medium {
-    height: 44rem;
-  }
-
-  .article-template__hero-large {
-    height: 66rem;
-  }
-}
-
-@media screen and (min-width: 990px) {
-  .article-template__hero-small {
-    height: 27.5rem;
-  }
-
-  .article-template__hero-medium {
-    height: 55rem;
-  }
-
-  .article-template__hero-large {
-    height: 82.5rem;
-  }
-}
-
-.article-template header {
-  margin-top: 4.4rem;
-  margin-bottom: 2rem;
-  line-height: calc(0.8 / var(--font-body-scale));
+.article-template__hero-image-col {
+  flex: 0 0 auto;
+  width: 100%;
 }
 
 @media screen and (min-width: 750px) {
-  .article-template header {
-    margin-top: 5rem;
+  .article-template__hero-image-col {
+    width: 40%;
   }
+}
+
+.article-template__hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+}
+
+.article-template__hero-text-col {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.article-template__hero-text-col header {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  line-height: calc(0.8 / var(--font-body-scale));
 }
 
 .article-template__title {
@@ -90,7 +67,6 @@
 }
 
 .article-template__content {
-  margin-top: 3rem;
   margin-bottom: 3rem;
 }
 

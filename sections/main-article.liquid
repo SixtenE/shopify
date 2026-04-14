@@ -1,6 +1,68 @@
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
 
+{%- assign featured_image_block = blank -%}
+{%- assign title_block = blank -%}
+{%- assign content_block = blank -%}
+{%- for block in section.blocks -%}
+  {%- case block.type -%}
+    {%- when 'featured_image' -%}{%- assign featured_image_block = block -%}
+    {%- when 'title' -%}{%- assign title_block = block -%}
+    {%- when 'content' -%}{%- assign content_block = block -%}
+  {%- endcase -%}
+{%- endfor -%}
+
 <article class="article-template">
+  {%- if article.image or title_block or content_block -%}
+    <div class="article-template__hero-layout page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {%- if article.image and featured_image_block -%}
+        <div class="article-template__hero-image-col" {{ featured_image_block.shopify_attributes }}>
+          <img
+            srcset="
+              {% if article.image.width >= 350 %}{{ article.image | image_url: width: 350 }} 350w,{% endif %}
+              {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+              {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+              {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+              {{ article.image | image_url }} {{ article.image.width }}w
+            "
+            sizes="(min-width: 750px) 40vw, 100vw"
+            src="{{ article.image | image_url: width: 750 }}"
+            loading="eager"
+            fetchpriority="high"
+            width="{{ article.image.width }}"
+            height="{{ article.image.height }}"
+            alt="{{ article.image.alt | escape }}"
+            class="article-template__hero-img"
+          >
+        </div>
+      {%- endif -%}
+      <div class="article-template__hero-text-col">
+        {%- if title_block -%}
+          <header {{ title_block.shopify_attributes }}>
+            <h1 class="article-template__title">{{ article.title | escape }}</h1>
+            {%- if title_block.settings.blog_show_date -%}
+              <span class="circle-divider caption-with-letter-spacing">
+                {{- article.published_at | time_tag: format: 'date' -}}
+              </span>
+            {%- endif -%}
+            {%- if title_block.settings.blog_show_author -%}
+              <span class="caption-with-letter-spacing">
+                <span>{{ article.author }}</span>
+              </span>
+            {%- endif -%}
+          </header>
+        {%- endif -%}
+        {%- if content_block -%}
+          <div
+            class="article-template__content rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {{ content_block.shopify_attributes }}
+          >
+            {{ article.content }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when '@app' -%}
@@ -8,69 +70,11 @@
           {% render block %}
         </div>
       {%- when 'featured_image' -%}
-        {%- if article.image -%}
-          <div
-            class="article-template__hero-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
-            {{ block.shopify_attributes }}
-          >
-            <div
-              class="article-template__hero-{{ block.settings.image_height }} media"
-              {% if block.settings.image_height == 'adapt' and article.image %}
-                style="padding-bottom: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"
-              {% endif %}
-            >
-              <img
-                srcset="
-                  {% if article.image.width >= 350 %}{{ article.image | image_url: width: 350 }} 350w,{% endif %}
-                  {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
-                  {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
-                  {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
-                  {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
-                  {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
-                  {{ article.image | image_url }} {{ article.image.width }}w
-                "
-                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw"
-                src="{{ article.image | image_url: width: 1100 }}"
-                loading="eager"
-                fetchpriority="high"
-                width="{{ article.image.width }}"
-                height="{{ article.image.height }}"
-                alt="{{ article.image.alt | escape }}"
-              >
-            </div>
-          </div>
-        {%- endif -%}
-
+        {# rendered in hero layout above #}
       {%- when 'title' -%}
-        <header
-          class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          <h1
-            class="article-template__title"
-          >
-            {{ article.title | escape }}
-          </h1>
-          {%- if block.settings.blog_show_date -%}
-            <span class="circle-divider caption-with-letter-spacing">
-              {{- article.published_at | time_tag: format: 'date' -}}
-            </span>
-          {%- endif -%}
-          {%- if block.settings.blog_show_author -%}
-            <span class="caption-with-letter-spacing">
-              <span>{{ article.author }}</span>
-            </span>
-          {%- endif -%}
-        </header>
-
+        {# rendered in hero layout above #}
       {%- when 'content' -%}
-        <div
-          class="article-template__content page-width page-width--narrow rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          {{ article.content }}
-        </div>
-
+        {# rendered in hero layout above #}
       {%- when 'share' -%}
         <div
           class="article-template__social-sharing page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -141,42 +145,40 @@
         {%- endif -%}
 
       {%- when 'artist_products' -%}
-        {%- if block.settings.collection != blank -%}
-          {%- assign artist_collection = collections[block.settings.collection] -%}
-          {%- if artist_collection != empty and artist_collection.products_count > 0 -%}
-            <div
-              class="article-template__artist-products page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              <h2 class="article-template__artist-products-heading">
-                {{ block.settings.heading | default: 'Shop artwork' | escape }}
-              </h2>
-              <ul class="article-template__artist-products-grid list-unstyled" role="list">
-                {%- for product in artist_collection.products limit: block.settings.products_to_show -%}
-                  <li>
-                    {%- render 'card-product',
-                      card_product: product,
-                      media_aspect_ratio: 'square',
-                      show_secondary_image: true,
-                      show_vendor: false,
-                      show_rating: false,
-                      lazy_load: true,
-                      skip_styles: forloop.index > 1,
-                      quick_add: false,
-                      section_id: section.id
-                    -%}
-                  </li>
-                {%- endfor -%}
-              </ul>
-              {%- if block.settings.show_view_all and artist_collection.products_count > block.settings.products_to_show -%}
-                <div class="article-template__artist-products-footer">
-                  <a href="{{ artist_collection.url }}" class="button button--secondary">
-                    {{ block.settings.view_all_label | default: 'View all' | escape }}
-                  </a>
-                </div>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
+        {%- assign artist_collection = article.metafields.custom.artist_collection.value -%}
+        {%- if artist_collection != blank and artist_collection.products_count > 0 -%}
+          <div
+            class="article-template__artist-products page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <h2 class="article-template__artist-products-heading">
+              {{ block.settings.heading | default: 'Shop artwork' | escape }}
+            </h2>
+            <ul class="article-template__artist-products-grid list-unstyled" role="list">
+              {%- for product in artist_collection.products limit: block.settings.products_to_show -%}
+                <li>
+                  {%- render 'card-product',
+                    card_product: product,
+                    media_aspect_ratio: 'square',
+                    show_secondary_image: true,
+                    show_vendor: false,
+                    show_rating: false,
+                    lazy_load: true,
+                    skip_styles: forloop.index > 1,
+                    quick_add: false,
+                    section_id: section.id
+                  -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+            {%- if block.settings.show_view_all and artist_collection.products_count > block.settings.products_to_show -%}
+              <div class="article-template__artist-products-footer">
+                <a href="{{ artist_collection.url }}" class="button button--secondary">
+                  {{ block.settings.view_all_label | default: 'View all' | escape }}
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
         {%- endif -%}
     {%- endcase -%}
   {%- endfor -%}
@@ -468,11 +470,6 @@
           "id": "heading",
           "label": "Heading",
           "default": "Shop artwork"
-        },
-        {
-          "type": "collection",
-          "id": "collection",
-          "label": "Collection"
         },
         {
           "type": "range",

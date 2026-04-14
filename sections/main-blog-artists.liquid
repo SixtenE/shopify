@@ -12,14 +12,15 @@
   }
 {%- endstyle -%}
 
-{%- paginate blog.articles by 12 -%}
+{%- paginate blog.articles by 250 -%}
   <div class="artists-blog page-width">
     <h1 class="artists-blog__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {{ blog.title | escape }}
     </h1>
 
+    {%- assign sorted_articles = blog.articles | sort: 'title' -%}
     <div class="artists-grid">
-      {%- for article in blog.articles -%}
+      {%- for article in sorted_articles -%}
         <a
           href="{{ article.url }}"
           class="artist-card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -50,12 +51,14 @@
                 {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
               </div>
             {%- endif -%}
+            <div class="artist-card__arrow-wrap">
+              <svg class="artist-card__arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </div>
           </div>
 
           <div class="artist-card__body">
             <h2 class="artist-card__name">
               {{ article.title | escape }}
-              <svg class="artist-card__arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </h2>
           </div>
         </a>
@@ -145,14 +148,23 @@
     font-weight: 700;
     line-height: 1.4;
     margin: 0;
+  }
+
+  .artist-card__arrow-wrap {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    background: #fff;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.8rem;
+    justify-content: center;
   }
 
   .artist-card__arrow {
-    flex-shrink: 0;
+    color: #000;
   }
 
 {% endstylesheet %}
