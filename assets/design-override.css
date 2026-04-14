@@ -384,7 +384,16 @@ hr {
 .facet-filters__field .select__select {
   height: auto;
   min-height: unset;
-  padding: 0 0.5rem 0 0;
+  padding: 0 0 0 0.5rem;
+  order: 2;
+  outline: none;
+  box-shadow: none;
+}
+
+.facet-filters__field .select__select:focus,
+.facet-filters__field .select__select:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 .facet-filters__field .select .svg-wrapper {
@@ -393,6 +402,7 @@ hr {
   align-items: center;
   height: auto;
   width: auto;
+  order: 1;
 }
 
 /* ---------- Product Cards ---------- */

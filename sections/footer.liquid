@@ -281,7 +281,7 @@
           {%- comment -%} Row 2, Col 2: Socials {%- endcomment -%}
           <div class="footer-custom__col">
             {%- if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_tiktok_link != blank or settings.social_twitter_link != blank or settings.social_pinterest_link != blank -%}
-              <h2 class="footer-custom__heading">Socials</h2>
+              <h2 class="footer-custom__heading">{{ 'sections.footer.follow_us' | t }}</h2>
               {% render 'social-icons', class: 'footer-custom__social-list' %}
             {%- endif -%}
           </div>
@@ -384,6 +384,67 @@
       </div>
     </div>
   </div>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ArtGallery",
+      "name": {{ shop.name | json }},
+      "url": {{ request.origin | json }},
+      {%- if shop.description != blank -%}
+        "description": {{ shop.description | json }},
+      {%- endif -%}
+      {%- if settings.logo -%}
+        "image": {{ settings.logo | image_url: width: 1200 | prepend: "https:" | json }},
+      {%- endif -%}
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": {{ section.settings.schema_street | default: '' | json }},
+        "addressLocality": {{ section.settings.schema_city | default: '' | json }},
+        "postalCode": {{ section.settings.schema_postal | default: '' | json }},
+        "addressCountry": "SE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": {{ section.settings.schema_lat | default: '57.7089' }},
+        "longitude": {{ section.settings.schema_lng | default: '11.9746' }}
+      }
+      {%- if section.settings.schema_phone != blank -%}
+        ,"telephone": {{ section.settings.schema_phone | json }}
+      {%- endif -%}
+      {%- if section.settings.schema_email != blank -%}
+        ,"email": {{ section.settings.schema_email | json }}
+      {%- endif -%}
+      {%- assign has_schema_hours = false -%}
+      {%- for i in (1..5) -%}
+        {%- assign day_key = 'schema_hours_day_' | append: i -%}
+        {%- assign time_key = 'schema_hours_open_' | append: i -%}
+        {%- if section.settings[day_key] != blank and section.settings[time_key] != blank -%}
+          {%- assign has_schema_hours = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if has_schema_hours -%}
+        ,"openingHoursSpecification": [
+          {%- assign hours_output = false -%}
+          {%- for i in (1..5) -%}
+            {%- assign day_key = 'schema_hours_day_' | append: i -%}
+            {%- assign open_key = 'schema_hours_open_' | append: i -%}
+            {%- assign close_key = 'schema_hours_close_' | append: i -%}
+            {%- if section.settings[day_key] != blank and section.settings[open_key] != blank -%}
+              {%- if hours_output -%},{%- endif -%}
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": {{ section.settings[day_key] | json }},
+                "opens": {{ section.settings[open_key] | json }},
+                "closes": {{ section.settings[close_key] | default: '' | json }}
+              }
+              {%- assign hours_output = true -%}
+            {%- endif -%}
+          {%- endfor -%}
+        ]
+      {%- endif -%}
+    }
+  </script>
 </footer>
 
 {% schema %}
@@ -405,7 +466,7 @@
       "type": "text",
       "id": "col1_heading",
       "label": "Heading",
-      "default": "Galleri Helle Knudsen"
+      "default": "Gallery"
     },
     {
       "type": "richtext",
@@ -421,7 +482,7 @@
       "type": "text",
       "id": "hours_heading",
       "label": "Hours heading",
-      "default": "Öppettider"
+      "default": "t:sections.footer.hours_heading"
     },
     {
       "type": "text",
@@ -508,13 +569,13 @@
       "type": "text",
       "id": "newsletter_heading",
       "label": "Newsletter heading",
-      "default": "WILDSTYLE NEWSLETTER"
+      "default": "Gallery"
     },
     {
       "type": "richtext",
       "id": "newsletter_text",
       "label": "Newsletter text",
-      "default": "<p>Don't miss out on upcoming exhibitions and special offers</p>"
+      "default": "<p>Få inbjudningar till vernissage, utställningsnyheter och erbjudanden direkt i din inkorg.</p>"
     },
     {
       "type": "header",
@@ -541,6 +602,131 @@
       "label": "Show policy links",
       "default": true,
       "info": "Displays your store's policy pages (privacy, shipping, etc.) from Shopify admin."
+    },
+    {
+      "type": "header",
+      "content": "Local business schema (SEO)"
+    },
+    {
+      "type": "text",
+      "id": "schema_street",
+      "label": "Street address",
+      "info": "Used in structured data for Google"
+    },
+    {
+      "type": "text",
+      "id": "schema_city",
+      "label": "City"
+    },
+    {
+      "type": "text",
+      "id": "schema_postal",
+      "label": "Postal code"
+    },
+    {
+      "type": "text",
+      "id": "schema_phone",
+      "label": "Phone number",
+      "info": "E.164 format, e.g. +46701234567"
+    },
+    {
+      "type": "text",
+      "id": "schema_email",
+      "label": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "schema_lat",
+      "label": "Latitude",
+      "default": "57.7089"
+    },
+    {
+      "type": "text",
+      "id": "schema_lng",
+      "label": "Longitude",
+      "default": "11.9746"
+    },
+    {
+      "type": "header",
+      "content": "Opening hours (schema)"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_day_1",
+      "label": "Row 1 — Day(s)",
+      "info": "Use English Schema.org names, e.g. Thursday, Friday"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_open_1",
+      "label": "Row 1 — Opens",
+      "info": "e.g. 12:00"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_close_1",
+      "label": "Row 1 — Closes",
+      "info": "e.g. 18:00"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_day_2",
+      "label": "Row 2 — Day(s)"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_open_2",
+      "label": "Row 2 — Opens"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_close_2",
+      "label": "Row 2 — Closes"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_day_3",
+      "label": "Row 3 — Day(s)"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_open_3",
+      "label": "Row 3 — Opens"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_close_3",
+      "label": "Row 3 — Closes"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_day_4",
+      "label": "Row 4 — Day(s)"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_open_4",
+      "label": "Row 4 — Opens"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_close_4",
+      "label": "Row 4 — Closes"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_day_5",
+      "label": "Row 5 — Day(s)"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_open_5",
+      "label": "Row 5 — Opens"
+    },
+    {
+      "type": "text",
+      "id": "schema_hours_close_5",
+      "label": "Row 5 — Closes"
     },
     {
       "type": "header",

@@ -67,7 +67,7 @@
                   {%- endfor -%}
                 </select>
                 <span class="svg-wrapper">
-                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
                 </span>
               </div>
             </div>
@@ -189,6 +189,32 @@
         {%- endif -%}
       </div>
     </div>
+    {%- if collection.products.size > 0 -%}
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": {{ collection.title | json }},
+          "url": "{{ request.origin }}{{ collection.url }}",
+          {%- if collection.description != blank -%}
+            "description": {{ collection.description | strip_html | truncate: 200 | json }},
+          {%- endif -%}
+          "mainEntity": {
+            "@type": "ItemList",
+            "numberOfItems": {{ collection.products.size }},
+            "itemListElement": [
+              {%- for product in collection.products -%}
+                {
+                  "@type": "ListItem",
+                  "position": {{ forloop.index }},
+                  "url": "{{ request.origin }}{{ product.url }}"
+                }{%- unless forloop.last -%},{%- endunless -%}
+              {%- endfor -%}
+            ]
+          }
+        }
+      </script>
+    {%- endif -%}
   {%- endpaginate -%}
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
