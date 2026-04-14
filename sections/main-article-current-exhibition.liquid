@@ -1,0 +1,133 @@
+{{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+
+<article class="article-template article-template--current-exhibition">
+  <div class="article-ce__layout page-width">
+    {%- if article.image -%}
+      <div class="article-ce__image{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <img
+          srcset="
+            {% if article.image.width >= 350 %}{{ article.image | image_url: width: 350 }} 350w,{% endif %}
+            {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+            {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+            {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+            {{ article.image | image_url }} {{ article.image.width }}w
+          "
+          sizes="(min-width: 990px) 50vw, 100vw"
+          src="{{ article.image | image_url: width: 1100 }}"
+          loading="eager"
+          fetchpriority="high"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+          alt="{{ article.image.alt | escape }}"
+          class="article-ce__img"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="article-ce__body{% unless article.image %} article-ce__body--full{% endunless %}">
+      <h1 class="article-ce__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ article.title | escape }}
+      </h1>
+
+      {%- if section.settings.show_date -%}
+        <span class="article-ce__date caption-with-letter-spacing{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{- article.published_at | time_tag: format: 'date' -}}
+        </span>
+      {%- endif -%}
+
+      <div class="article-ce__content rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ article.content }}
+      </div>
+
+      <div class="article-ce__back{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
+          <span class="icon-wrap">
+            <span class="svg-wrapper">
+              {{- 'icon-arrow.svg' | inline_asset_content -}}
+            </span>
+          </span>
+          {{ 'blogs.article.back_to_blog' | t: title: blog.title | escape }}
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% stylesheet %}
+  .article-ce__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    padding-top: 5rem;
+    padding-bottom: 6rem;
+  }
+
+  .article-ce__image {
+    position: sticky;
+    top: 2rem;
+  }
+
+  .article-ce__img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .article-ce__body--full {
+    grid-column: 1 / -1;
+  }
+
+  .article-ce__title {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-ce__date {
+    display: block;
+    margin-bottom: 3rem;
+    color: rgba(var(--color-foreground), 0.5);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 1.4rem;
+  }
+
+  .article-ce__content {
+    margin-top: 3rem;
+  }
+
+  .article-ce__back {
+    margin-top: 4rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .article-ce__layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .article-ce__image {
+      position: static;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Current exhibition article",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "Show date"
+    }
+  ]
+}
+{% endschema %}

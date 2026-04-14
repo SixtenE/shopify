@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article-current-exhibition",
+      "settings": {
+        "show_date": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

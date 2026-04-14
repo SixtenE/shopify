@@ -4,19 +4,35 @@
 
 {%- if article -%}
   <article class="current-exhibition-article">
-    <div class="current-exhibition-article__body page-width page-width--narrow">
-      <h1 class="current-exhibition-article__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-        {{ article.title | escape }}
-      </h1>
-
-      {%- if section.settings.show_date -%}
-        <p class="current-exhibition-article__date caption-with-letter-spacing{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-          {{- article.published_at | time_tag: format: 'date' -}}
-        </p>
+    <div class="current-exhibition-article__layout page-width">
+      {%- if article.image -%}
+        <div class="current-exhibition-article__image{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{
+            article.image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1000, 1200',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              class: 'current-exhibition-article__img'
+          }}
+        </div>
       {%- endif -%}
 
-      <div class="current-exhibition-article__content rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        {{ article.content }}
+      <div class="current-exhibition-article__body">
+        <h1 class="current-exhibition-article__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ article.title | escape }}
+        </h1>
+
+        {%- if section.settings.show_date -%}
+          <p class="current-exhibition-article__date caption-with-letter-spacing{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{- article.published_at | time_tag: format: 'date' -}}
+          </p>
+        {%- endif -%}
+
+        <div class="current-exhibition-article__content rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {{ article.content }}
+        </div>
       </div>
     </div>
   </article>
@@ -27,22 +43,24 @@
 {%- endif -%}
 
 {% stylesheet %}
-  .current-exhibition-article__hero {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .current-exhibition-article__hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .current-exhibition-article__body {
+  .current-exhibition-article__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
     padding-top: 6rem;
     padding-bottom: 6rem;
+  }
+
+  .current-exhibition-article__image {
+    position: sticky;
+    top: 2rem;
+  }
+
+  .current-exhibition-article__img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   .current-exhibition-article__title {
@@ -60,6 +78,17 @@
 
   .current-exhibition-article__content {
     margin-top: 3rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .current-exhibition-article__layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .current-exhibition-article__image {
+      position: static;
+    }
   }
 {% endstylesheet %}
 
