@@ -47,38 +47,6 @@
     </div>
   </div>
 
-  {%- assign artist_collection = article.metafields.custom.artist_collection.value -%}
-  {%- if artist_collection != blank and artist_collection.products_count > 0 -%}
-    <div class="article-ce__artist-products page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <h2 class="article-ce__artist-products-heading">
-        {{ section.settings.products_heading | default: 'Shop artwork' | escape }}
-      </h2>
-      <ul class="article-template__artist-products-grid list-unstyled" role="list">
-        {%- for product in artist_collection.products limit: section.settings.products_to_show -%}
-          <li>
-            {%- render 'card-product',
-              card_product: product,
-              media_aspect_ratio: 'square',
-              show_secondary_image: true,
-              show_vendor: false,
-              show_rating: false,
-              lazy_load: true,
-              skip_styles: forloop.index > 1,
-              quick_add: false,
-              section_id: section.id
-            -%}
-          </li>
-        {%- endfor -%}
-      </ul>
-      {%- if section.settings.show_view_all and artist_collection.products_count > section.settings.products_to_show -%}
-        <div class="article-template__artist-products-footer">
-          <a href="{{ artist_collection.url }}" class="button button--secondary">
-            {{ section.settings.view_all_label | default: 'View all' | escape }}
-          </a>
-        </div>
-      {%- endif -%}
-    </div>
-  {%- endif -%}
 </article>
 
 <script type="application/ld+json">
@@ -151,15 +119,6 @@
     }
   }
 
-  .article-ce__artist-products {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-
-  .article-ce__artist-products-heading {
-    margin-top: 0;
-    margin-bottom: 3rem;
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -197,33 +156,6 @@
       "id": "show_date",
       "default": false,
       "label": "Show date"
-    },
-    {
-      "type": "text",
-      "id": "products_heading",
-      "label": "Products heading",
-      "default": "Shop artwork"
-    },
-    {
-      "type": "range",
-      "id": "products_to_show",
-      "label": "Products to show",
-      "min": 2,
-      "max": 12,
-      "step": 1,
-      "default": 4
-    },
-    {
-      "type": "checkbox",
-      "id": "show_view_all",
-      "label": "Show \"View all\" button",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "view_all_label",
-      "label": "\"View all\" label",
-      "default": "View all"
     }
   ]
 }
