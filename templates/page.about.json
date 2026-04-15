@@ -13,19 +13,6 @@
       "type": "main-page-about",
       "settings": {
         "color_scheme": "scheme-1",
-        "title": "About",
-        "subtitle": "A contemporary art space in Gothenburg dedicated to graffiti and street art culture. We showcase rotating exhibitions from leading artists pushing the boundaries of the medium.",
-        "image_ratio": "16 / 9",
-        "block_1_heading": "The Space",
-        "block_1_text": "Wildstyle Gallery is a contemporary art space in Gothenburg dedicated to showcasing graffiti and street art in a gallery setting. Our space features rotating exhibitions from both established and emerging artists, offering a platform where urban art meets fine art presentation.",
-        "block_2_heading": "Exhibitions",
-        "block_2_text": "We host solo and group exhibitions throughout the year, each carefully curated to highlight the depth and diversity of contemporary graffiti art. From large-scale canvases to limited edition prints, every show brings something new to discover.",
-        "info_1_label": "Location",
-        "info_1_value": "<p>Gothenburg, Sweden</p>",
-        "info_2_label": "Hours",
-        "info_2_value": "<p>Thu–Fri 12–18<br/>Sat–Sun 12–16</p>",
-        "info_3_label": "Contact",
-        "info_3_value": "<p><a href=\"mailto:hello@wildstylegallery.se\">hello@wildstylegallery.se</a></p>",
         "padding_top": 36,
         "padding_bottom": 36
       }

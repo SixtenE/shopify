@@ -120,6 +120,13 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: opacity 200ms ease-out;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .artist-card:hover .artist-card__image {
+      opacity: 0.8;
+    }
   }
 
   .artist-card__image-placeholder {
