@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Browse our latest products",
+            "heading": "Henrik Stenberg (SE)",
             "heading_size": "h1"
           }
         },
@@ -44,6 +44,7 @@
         "button"
       ],
       "settings": {
+        "video": "shopify://files/videos/henrik_stenberg_loop.mp4",
         "image_overlay_opacity": 60,
         "image_height": "large",
         "image_behavior": "zoom-in",
@@ -59,7 +60,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "staff-picks",
+        "collection": "all",
         "products_to_show": 8,
         "title": "Featured artwork",
         "heading_size": "h2",
@@ -88,14 +89,13 @@
       "type": "dual-content",
       "settings": {
         "color_scheme": "scheme-1",
-        "column_1_image": "shopify://shop_images/about.webp",
+        "column_1_image": "shopify://shop_images/about_us.png",
         "column_1_image_ratio": "4 / 3",
         "column_1_heading": "What is Wildstyle?",
         "column_1_text": "Explore our gallery space featuring rotating exhibitions from leading contemporary artists.",
         "column_1_button_label": "About the gallery",
         "column_1_button_link": "shopify://pages/about",
         "column_1_button_secondary": false,
-        "column_2_image": "shopify://shop_images/mural.jpg",
         "column_2_image_ratio": "4 / 3",
         "column_2_heading": "From small walls to big walls",
         "column_2_text": "We create large-scale murals for businesses, restaurants, and public spaces, transforming walls into lasting impressions.",
